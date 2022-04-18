@@ -1,0 +1,471 @@
+[gd_scene load_steps=28 format=2]
+
+[ext_resource path="res://UI/UI.gd" type="Script" id=1]
+[ext_resource path="res://Environment Effects/black.png" type="Texture" id=2]
+[ext_resource path="res://UI/esc.png" type="Texture" id=3]
+[ext_resource path="res://UI/portrait.png" type="Texture" id=4]
+[ext_resource path="res://UI/healthbar.png" type="Texture" id=5]
+[ext_resource path="res://UI/emptyHealthBar.png" type="Texture" id=6]
+[ext_resource path="res://UI/HealthText.png" type="Texture" id=7]
+[ext_resource path="res://UI/UItheme.tres" type="Theme" id=8]
+[ext_resource path="res://UI/emptyExpBar.png" type="Texture" id=9]
+[ext_resource path="res://UI/ExpText.png" type="Texture" id=10]
+[ext_resource path="res://UI/expbar.png" type="Texture" id=11]
+[ext_resource path="res://UI/MainMenuText.png" type="Texture" id=12]
+[ext_resource path="res://UI/ToHomeText.png" type="Texture" id=13]
+[ext_resource path="res://UI/Skills.png" type="Texture" id=14]
+[ext_resource path="res://UI/map.png" type="Texture" id=15]
+[ext_resource path="res://UI/Magic.png" type="Texture" id=16]
+[ext_resource path="res://UI/Strength.png" type="Texture" id=17]
+[ext_resource path="res://UI/smallerText.tres" type="DynamicFont" id=18]
+[ext_resource path="res://UI/Speed.png" type="Texture" id=19]
+[ext_resource path="res://UI/paperBackground.png" type="Texture" id=20]
+[ext_resource path="res://UI/up.png" type="Texture" id=21]
+[ext_resource path="res://UI/CurrentQuestText.png" type="Texture" id=22]
+
+[sub_resource type="StyleBoxEmpty" id=1]
+
+[sub_resource type="StyleBoxEmpty" id=2]
+
+[sub_resource type="StyleBoxEmpty" id=3]
+
+[sub_resource type="StyleBoxEmpty" id=4]
+
+[sub_resource type="StyleBoxEmpty" id=5]
+
+[node name="CanvasLayer" type="CanvasLayer"]
+pause_mode = 2
+layer = 2
+
+[node name="UI" type="Control" parent="."]
+pause_mode = 2
+anchor_bottom = 1.0
+margin_top = 3.0
+margin_right = 320.0
+theme = ExtResource( 8 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Dark" type="Sprite" parent="UI"]
+modulate = Color( 1, 1, 1, 0.764706 )
+position = Vector2( 292, 238 )
+scale = Vector2( 1.85714, 2.67582 )
+z_index = -1
+texture = ExtResource( 2 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 322.75, 182.75 )
+
+[node name="TabContainer" type="TabContainer" parent="UI"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 22.0
+margin_top = 11.0
+margin_right = -28.0
+margin_bottom = -12.0
+mouse_default_cursor_shape = 2
+theme = ExtResource( 8 )
+tab_align = 0
+drag_to_rearrange_enabled = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Player" type="Tabs" parent="UI/TabContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 22.0
+margin_top = 21.0
+margin_right = -22.0
+margin_bottom = -5.0
+theme = ExtResource( 8 )
+tab_align = 0
+
+[node name="Portrait" type="Panel" parent="UI/TabContainer/Player"]
+margin_left = 3.0
+margin_top = 3.0
+margin_right = 70.0
+margin_bottom = 68.0
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Portrait" type="Sprite" parent="UI/TabContainer/Player/Portrait"]
+position = Vector2( 33.494, 32.3936 )
+scale = Vector2( 3.2494, 3.13936 )
+texture = ExtResource( 4 )
+
+[node name="Health" type="Panel" parent="UI/TabContainer/Player"]
+margin_left = 71.988
+margin_top = 3.78719
+margin_right = 211.988
+margin_bottom = 34.7872
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="UI/TabContainer/Player/Health"]
+position = Vector2( 70, 20 )
+texture = ExtResource( 6 )
+
+[node name="Health Bar" type="TextureRect" parent="UI/TabContainer/Player/Health"]
+margin_left = 4.0
+margin_top = 13.0
+margin_right = 136.0
+margin_bottom = 27.0
+texture = ExtResource( 5 )
+stretch_mode = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Sprite" parent="UI/TabContainer/Player/Health"]
+position = Vector2( 24, 6 )
+texture = ExtResource( 7 )
+
+[node name="Experience" type="Panel" parent="UI/TabContainer/Player"]
+margin_left = 71.988
+margin_top = 36.7872
+margin_right = 211.988
+margin_bottom = 67.7872
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="EmptyExpBar" type="Sprite" parent="UI/TabContainer/Player/Experience"]
+position = Vector2( 70, 20 )
+texture = ExtResource( 9 )
+
+[node name="ExpText" type="Sprite" parent="UI/TabContainer/Player/Experience"]
+position = Vector2( 14, 6 )
+texture = ExtResource( 10 )
+
+[node name="Exp Bar" type="TextureRect" parent="UI/TabContainer/Player/Experience"]
+margin_left = 4.0
+margin_top = 13.0
+margin_right = 5.0
+margin_bottom = 27.0
+texture = ExtResource( 11 )
+stretch_mode = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ExpLabel" type="Label" parent="UI/TabContainer/Player/Experience"]
+margin_left = 28.0
+margin_top = 2.0
+margin_right = 68.0
+margin_bottom = 11.0
+custom_styles/normal = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Skills" type="Panel" parent="UI/TabContainer/Player"]
+margin_left = 3.0
+margin_top = 70.0
+margin_right = 212.0
+margin_bottom = 128.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Skills" type="Sprite" parent="UI/TabContainer/Player/Skills"]
+position = Vector2( 105, 7 )
+texture = ExtResource( 14 )
+
+[node name="Label" type="Label" parent="UI/TabContainer/Player/Skills"]
+margin_left = 158.0
+margin_top = 3.0
+margin_right = 205.0
+margin_bottom = 12.0
+custom_styles/normal = SubResource( 2 )
+text = "idk"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Strength" type="NinePatchRect" parent="UI/TabContainer/Player/Skills"]
+margin_left = 74.0
+margin_top = 14.0
+margin_right = 135.0
+margin_bottom = 55.0
+texture = ExtResource( 20 )
+region_rect = Rect2( 0, 21, 16, 16 )
+patch_margin_left = 7
+patch_margin_top = 8
+patch_margin_right = 7
+patch_margin_bottom = 7
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Strength" type="Label" parent="UI/TabContainer/Player/Skills/Strength"]
+margin_left = 4.0
+margin_top = 12.0
+margin_right = 56.0
+margin_bottom = 17.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 18 )
+custom_styles/normal = SubResource( 3 )
+text = "Used for physical attacks."
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Strength" type="Sprite" parent="UI/TabContainer/Player/Skills/Strength/Strength"]
+position = Vector2( 26, -5 )
+texture = ExtResource( 17 )
+
+[node name="Strength2" type="Button" parent="UI/TabContainer/Player/Skills/Strength"]
+margin_left = 35.0
+margin_top = 19.0
+margin_right = 60.0
+margin_bottom = 39.0
+icon = ExtResource( 21 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Level3" type="Label" parent="UI/TabContainer/Player/Skills/Strength"]
+margin_left = 3.0
+margin_top = 20.0
+margin_right = 33.0
+margin_bottom = 37.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 18 )
+custom_styles/normal = SubResource( 4 )
+text = "Level: "
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Speed" type="NinePatchRect" parent="UI/TabContainer/Player/Skills"]
+margin_left = 145.0
+margin_top = 14.0
+margin_right = 206.0
+margin_bottom = 55.0
+texture = ExtResource( 20 )
+region_rect = Rect2( 0, 21, 16, 16 )
+patch_margin_left = 7
+patch_margin_top = 8
+patch_margin_right = 7
+patch_margin_bottom = 7
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Speed" type="Label" parent="UI/TabContainer/Player/Skills/Speed"]
+margin_left = 5.0
+margin_top = 12.0
+margin_right = 57.0
+margin_bottom = 25.0
+mouse_filter = 0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 18 )
+custom_styles/normal = SubResource( 3 )
+text = "Makes you run faster."
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Speed" type="Sprite" parent="UI/TabContainer/Player/Skills/Speed/Speed"]
+position = Vector2( 27, -5 )
+texture = ExtResource( 19 )
+
+[node name="Speed2" type="Button" parent="UI/TabContainer/Player/Skills/Speed"]
+margin_left = 35.0
+margin_top = 19.0
+margin_right = 60.0
+margin_bottom = 39.0
+icon = ExtResource( 21 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Level2" type="Label" parent="UI/TabContainer/Player/Skills/Speed"]
+margin_left = 3.0
+margin_top = 20.0
+margin_right = 33.0
+margin_bottom = 37.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 18 )
+custom_styles/normal = SubResource( 4 )
+text = "Level: "
+
+[node name="Magic" type="NinePatchRect" parent="UI/TabContainer/Player/Skills"]
+margin_left = 4.0
+margin_top = 14.0
+margin_right = 65.0
+margin_bottom = 55.0
+texture = ExtResource( 20 )
+region_rect = Rect2( 0, 21, 16, 16 )
+patch_margin_left = 7
+patch_margin_top = 8
+patch_margin_right = 7
+patch_margin_bottom = 7
+
+[node name="Magic" type="Label" parent="UI/TabContainer/Player/Skills/Magic"]
+margin_left = 6.0
+margin_top = 12.0
+margin_right = 56.0
+margin_bottom = 17.0
+mouse_filter = 0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 18 )
+custom_styles/normal = SubResource( 3 )
+text = "Used for magical attacks."
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Magic" type="Sprite" parent="UI/TabContainer/Player/Skills/Magic/Magic"]
+position = Vector2( 24, -5 )
+texture = ExtResource( 16 )
+
+[node name="Magic2" type="Button" parent="UI/TabContainer/Player/Skills/Magic"]
+margin_left = 35.0
+margin_top = 19.0
+margin_right = 60.0
+margin_bottom = 39.0
+icon = ExtResource( 21 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Level" type="Label" parent="UI/TabContainer/Player/Skills/Magic"]
+margin_left = 3.0
+margin_top = 20.0
+margin_right = 33.0
+margin_bottom = 37.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 18 )
+custom_styles/normal = SubResource( 4 )
+text = "Level: "
+
+[node name="Quests" type="Tabs" parent="UI/TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 22.0
+margin_top = 21.0
+margin_right = -22.0
+margin_bottom = -5.0
+
+[node name="Panel" type="Panel" parent="UI/TabContainer/Quests"]
+margin_left = -14.0
+margin_top = 5.0
+margin_right = 240.0
+margin_bottom = 53.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CurrentQuestText" type="Sprite" parent="UI/TabContainer/Quests/Panel"]
+position = Vector2( 41, 7 )
+texture = ExtResource( 22 )
+
+[node name="Label" type="Label" parent="UI/TabContainer/Quests/Panel"]
+margin_left = 4.0
+margin_top = 16.0
+margin_right = 44.0
+margin_bottom = 28.0
+custom_styles/normal = SubResource( 5 )
+text = "Kill 5 rats"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="EmptyQuestBar" type="Sprite" parent="UI/TabContainer/Quests/Panel"]
+position = Vector2( 131, 20 )
+texture = ExtResource( 9 )
+
+[node name="Quest Bar" type="TextureRect" parent="UI/TabContainer/Quests/Panel"]
+margin_left = 65.0
+margin_top = 13.0
+margin_right = 66.0
+margin_bottom = 27.0
+texture = ExtResource( 11 )
+expand = true
+stretch_mode = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Menu" type="Tabs" parent="UI/TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 22.0
+margin_top = 21.0
+margin_right = -22.0
+margin_bottom = -5.0
+
+[node name="Map" type="Sprite" parent="UI/TabContainer/Menu"]
+position = Vector2( 146, 57 )
+scale = Vector2( 0.148182, 0.148305 )
+texture = ExtResource( 15 )
+
+[node name="MainMenu" type="Button" parent="UI/TabContainer/Menu"]
+margin_left = -14.0
+margin_top = 5.0
+margin_right = 52.0
+margin_bottom = 25.0
+icon = ExtResource( 12 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ToHome" type="Button" parent="UI/TabContainer/Menu"]
+margin_left = -14.0
+margin_top = 31.0
+margin_right = 52.0
+margin_bottom = 51.0
+icon = ExtResource( 13 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ExitButton" type="Button" parent="UI"]
+margin_left = 261.0
+margin_top = 8.0
+margin_right = 292.0
+margin_bottom = 28.0
+mouse_default_cursor_shape = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme = ExtResource( 8 )
+icon = ExtResource( 3 )
+clip_text = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Timer" type="Timer" parent="UI"]
+one_shot = true
+
+[node name="MainMenuConfirm" type="ConfirmationDialog" parent="UI"]
+margin_right = 200.0
+margin_bottom = 70.0
+rect_min_size = Vector2( 150, 52.5 )
+dialog_text = "Go to main menu?  All unsaved data will be lost!  To save, go through a door or a warp.  You'll see a 'Saved!' icon in the bottom of the screen when the game saves."
+dialog_autowrap = true
+
+[node name="HomeConfirm" type="ConfirmationDialog" parent="UI"]
+margin_right = 200.0
+margin_bottom = 73.0
+rect_min_size = Vector2( 150, 52.5 )
+dialog_text = "Teleport to home?   All unsaved data will be lost!  To save, go through a door or a warp.  You'll see a 'Saved!' icon in the bottom of the screen when the game saves."
+dialog_autowrap = true
+
+[connection signal="pressed" from="UI/TabContainer/Player/Skills/Strength/Strength2" to="UI" method="_on_Strength2_pressed"]
+[connection signal="pressed" from="UI/TabContainer/Player/Skills/Speed/Speed2" to="UI" method="_on_Speed2_pressed"]
+[connection signal="pressed" from="UI/TabContainer/Player/Skills/Magic/Magic2" to="UI" method="_on_Magic2_pressed"]
+[connection signal="pressed" from="UI/TabContainer/Menu/MainMenu" to="UI" method="_on_MainMenu_pressed"]
+[connection signal="pressed" from="UI/TabContainer/Menu/ToHome" to="UI" method="_on_ToHome_pressed"]
+[connection signal="pressed" from="UI/ExitButton" to="UI" method="_on_Button_pressed"]
+[connection signal="confirmed" from="UI/MainMenuConfirm" to="UI" method="_on_MainMenuConfirm_confirmed"]
+[connection signal="confirmed" from="UI/HomeConfirm" to="UI" method="_on_HomeConfirm_confirmed"]

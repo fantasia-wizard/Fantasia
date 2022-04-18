@@ -1,0 +1,15 @@
+demo/*
+.import/
+default_env.tres
+export_presets.cfg
+icon.png.import
+project.godot
+android/
+Compiled/
+web/
+debug.keystore
+fantasia.keystore
+twilioquest-76-1x.png
+shido-50x-1x.png
+splash.png
+

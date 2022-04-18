@@ -1,0 +1,52 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Environment Effects/scorch.png" type="Texture" id=1]
+[ext_resource path="res://Environment Effects/Scorch.gd" type="Script" id=2]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+
+uniform float alpha;
+uniform sampler2D alphaCurve;
+
+void fragment(){
+	vec4 prev_color = texture(TEXTURE, UV);
+	vec4 new_color = prev_color;
+	new_color.a *= texture(alphaCurve, vec2(alpha, 0.0)).r;
+	COLOR = new_color;
+}"
+
+[sub_resource type="Gradient" id=3]
+offsets = PoolRealArray( 0, 0.235088, 1 )
+colors = PoolColorArray( 0, 0, 0, 1, 0.957895, 0.957895, 0.957895, 1, 1, 1, 1, 1 )
+
+[sub_resource type="GradientTexture" id=4]
+gradient = SubResource( 3 )
+
+[sub_resource type="ShaderMaterial" id=2]
+resource_local_to_scene = true
+shader = SubResource( 1 )
+shader_param/alpha = 0.0
+shader_param/alphaCurve = SubResource( 4 )
+
+[sub_resource type="CircleShape2D" id=5]
+radius = 6.08276
+
+[node name="Scorch" type="Sprite"]
+modulate = Color( 1, 1, 1, 0.45098 )
+show_behind_parent = true
+material = SubResource( 2 )
+texture = ExtResource( 1 )
+script = ExtResource( 2 )
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 1025
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource( 5 )
+
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]

@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://NPC/Npc.tscn" type="PackedScene" id=1]
+[ext_resource path="res://NPC/Bobert.gd" type="Script" id=2]
+[ext_resource path="res://Shadows/14p shadow.png" type="Texture" id=3]
+
+[node name="Farmer" instance=ExtResource( 1 )]
+script = ExtResource( 2 )
+
+[node name="7pShadow" parent="." index="0"]
+position = Vector2( -7, -5 )
+texture = ExtResource( 3 )
+
+[node name="Sprite" parent="." index="3"]
+position = Vector2( 0, -17 )
+frame = 3
+
+[node name="Label" parent="CanvasLayer/Label" index="0"]
+text = "Bob"

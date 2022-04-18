@@ -1,0 +1,39 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Overlap Detection/Hitbox.tscn" type="PackedScene" id=1]
+[ext_resource path="res://World/grass.png" type="Texture" id=2]
+[ext_resource path="res://World/Grass.gd" type="Script" id=3]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 4, 3 )
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 7.0
+
+[node name="Grass" type="Sprite"]
+position = Vector2( 1, -4 )
+texture = ExtResource( 2 )
+script = ExtResource( 3 )
+
+[node name="Hitbox" parent="." instance=ExtResource( 1 )]
+visible = false
+position = Vector2( -1, 4 )
+collision_layer = 8
+collision_mask = 64
+
+[node name="CollisionShape2D" parent="Hitbox" index="0"]
+position = Vector2( 0, -1 )
+shape = SubResource( 1 )
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2( -1, 4 )
+shape = SubResource( 2 )
+disabled = true
+
+[connection signal="area_entered" from="Hitbox" to="." method="_on_Hitbox_area_entered"]
+[connection signal="finished" from="Hitbox/Hit Sound" to="." method="_on_Hit_Sound_finished"]
+[connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]
+
+[editable path="Hitbox"]
