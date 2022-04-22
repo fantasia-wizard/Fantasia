@@ -34,7 +34,7 @@ func die():
 				get_parent().add_child(new_heart)
 				new_heart.global_position = global_position
 
-func explode():
+func explode(area):
 	var scorch = scorch_mark.instance()
 	get_parent().add_child(scorch)
 	scorch.global_position = self.global_position
@@ -47,7 +47,7 @@ func _on_Hitbox_area_entered(area):
 	visible = false
 	$Hitbox/CollisionShape2D.call('queue_free')
 	if area.name == 'Explosion':
-		call_deferred('explode')
+		call_deferred('explode', area)
 	else:
 		call_deferred('die')
 
