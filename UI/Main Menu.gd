@@ -29,6 +29,7 @@ func _on_CheckButton_toggled(button_pressed):
 	PlayerStats.save_game()
 
 
-func _on_Credits_pressed() -> void:
+func _on_Tutorial_pressed() -> void:
+	PlayerStats.call_deferred('load_game')
 # warning-ignore:return_value_discarded
-	get_tree().change_scene("res://UI/Credits.tscn")
+	get_tree().change_scene('res://World/Tutorial.tscn')

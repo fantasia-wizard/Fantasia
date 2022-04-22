@@ -22,7 +22,6 @@ func _ready():
 	heartBlink.play('stop')
 
 func _process(_delta):
-
 	if loading:
 		var touch_controls = TouchControls.instance()
 		add_child(touch_controls)

@@ -128,9 +128,6 @@ margin_bottom = -0.0400085
 texture = ExtResource( 8 )
 expand = true
 stretch_mode = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Empty" type="TextureRect" parent="."]
 margin_left = 22.0
