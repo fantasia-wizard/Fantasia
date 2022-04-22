@@ -7,7 +7,7 @@ onready var black_overlay = $CanvasLayer/BlackOverlay
 func _ready():
 # warning-ignore:standalone_expression
 	if not PlayerStats.start_location and not loaded:
-		PlayerStats.start_location = Vector2(-24, 129)
+		PlayerStats.start_location = Vector2(-25, 125)
 		loaded = true
 		black_overlay.hide()
 	if not PlayerStats.tutorials_completed.has($'tutorial-spells/spellbook'.name) and PlayerStats.level >= 5:
