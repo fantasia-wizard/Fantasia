@@ -145,7 +145,7 @@ func _on_Hitbox_area_entered(area):
 		PlayerStats.experience += exp_on_kill
 		PlayerStats.bosses_killed += 1
 
-func explode():
+func explode(_variable):
 	var Explosion = explosion.instance()
 	get_parent().add_child(Explosion)
 	Explosion.global_position = global_position

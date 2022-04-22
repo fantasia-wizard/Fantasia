@@ -6,6 +6,9 @@ func _ready():
 	frame = 0
 	playing = false
 	$Area2D2/CollisionShape2D.disabled = false
+	if colliding():
+		get_parent().queue_free()
+
 
 func _process(delta):
 	if $Area2D.get_overlapping_areas().size() > 0:
@@ -13,8 +16,7 @@ func _process(delta):
 			play()
 		else:
 			get_parent().queue_free()
-	if colliding():
-		get_parent().queue_free()
+
 
 func _on_RatEmerge_animation_finished():
 	var new_rat = rat.instance()
@@ -28,5 +30,5 @@ func _on_Area2D2_body_entered(body):
 
 func colliding():
 	get_parent().move_and_slide(Vector2.ZERO)
-	if get_parent().is_on_wall() or get_parent().is_on_floor() or get_parent().is_on_ceiling():
-		return true
+	return get_parent().is_on_wall()
+

@@ -5,7 +5,6 @@ var rat = preload('res://Enemies/RatEmerge.tscn')
 
 export var rats = 6
 
-
 func _on_Timer_timeout():
 	if get_child_count() <= rats:
 		for _x in range(rand_range(0, 2)):

@@ -2,20 +2,30 @@ extends AnimatedSprite
 
 var bat = preload('res://Enemies/Bat.tscn')
 
-onready var area2D = $Area2D
-
 func _ready():
-	if get_parent().is_on_wall():
-		get_parent().queue_free()
 	frame = 0
 	playing = false
+	$Area2D2/CollisionShape2D.disabled = false
+	if colliding():
+		get_parent().queue_free()
 
 func _process(delta):
-	if area2D.get_overlapping_areas().size() > 0:
-		play()
+	if $Area2D.get_overlapping_areas().size() > 0:
+		if not colliding():
+			play()
+		else:
+			get_parent().queue_free()
 
 func _on_RatEmerge_animation_finished():
 	var new_bat = bat.instance()
 	get_parent().get_parent().add_child(new_bat)
-	new_bat.global_position = Vector2(global_position.x, global_position.y+16)
+	new_bat.global_position = get_parent().global_position + Vector2(0, -10)
 	get_parent().queue_free()
+
+
+func _on_Area2D2_body_entered(body):
+	get_parent().queue_free()
+
+func colliding():
+	get_parent().move_and_slide(Vector2.ZERO)
+	return get_parent().is_on_wall()

@@ -117,10 +117,12 @@ func _on_Hitbox_area_entered(area):
 		PlayerStats.experience += exp_on_kill
 		PlayerStats.bats_killed += 1
 
-func explode():
+func explode(area):
+	var knockback_vector = area.global_position.direction_to(global_position)*150
 	var Explosion = explosion.instance()
 	get_parent().add_child(Explosion)
 	Explosion.global_position = global_position
+	velocity = move_and_slide(knockback_vector)
 
 func shield_blast():
 	var ShieldBlast = _shield_blast.instance()

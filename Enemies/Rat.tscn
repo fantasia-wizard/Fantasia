@@ -1,18 +1,149 @@
 [gd_scene load_steps=35 format=2]
 
-[ext_resource path="res://Enemies/rat.png" type="Texture" id=1]
-[ext_resource path="res://Enemies/Rat.gd" type="Script" id=2]
-[ext_resource path="res://Enemies/Sight.gd" type="Script" id=3]
-[ext_resource path="res://Enemies/SoftCollision.gd" type="Script" id=4]
 [ext_resource path="res://Overlap Detection/Hitbox.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Overlap Detection/Hurtbox.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Environment Effects/Blink.gdshader" type="Shader" id=7]
 [ext_resource path="res://Sounds/death_sound.tres" type="AudioStream" id=8]
 
+[sub_resource type="GDScript" id=30]
+script/source = "extends KinematicBody2D
+
+enum{
+	MOVE
+	CHASE
+	IDLE
+}
+
+onready var animation_tree = $AnimationTree
+onready var animation_state = animation_tree.get('parameters/playback')
+onready var state_timer = $StateTimer
+onready var soft_collision = $SoftCollision
+onready var sprite_timer = $SpriteTimer
+onready var explosion = preload('res://Environment Effects/explosion.tscn')
+onready var hurt_box = $Hurtbox
+
+export var MAX_SPEED = 50
+export var ACCELERATION = 500
+export var wander_distance = 5
+export var max_health = 2
+export var exp_on_kill = 5
+
+var shield_effect = preload('res://Environment Effects/ShieldBlast.tscn')
+var state = MOVE
+var player = null
+var velocity = Vector2.ZERO
+var start_location = get_transform()
+var target_location = get_transform()
+var health = max_health
+var last_seen_pos = Vector2.ZERO
+
+func _ready():
+	animation_state.travel('Direction')
+	start_location = global_position
+	target_location = global_position
+	new_state()
+	$DeathSound.volume_db = -20
+
+func move_state(delta):
+	if global_position.distance_to(target_location) < 15 or is_on_wall():
+		target_location = global_position + Vector2(rand_range(-wander_distance, wander_distance) * 2, rand_range(-wander_distance, wander_distance) * 2)
+	if global_position.distance_to(start_location) > 100:
+		target_location = start_location + Vector2(rand_range(-wander_distance, wander_distance) * 2, rand_range(-wander_distance, wander_distance) * 2)
+	move(delta)
+
+
+func chase_state(delta):
+	MAX_SPEED = 75
+	target_location = player.global_position
+	move(delta)
+
+
+func idle_state(delta):
+	velocity = velocity.move_toward(Vector2.ZERO, ACCELERATION * delta * 0.1)
+	velocity += soft_collision.push_vector()
+	velocity = move_and_slide(velocity)
+
+func new_state():
+	var rand_num = randi() %2
+	match rand_num:
+		0:
+			state = MOVE
+		1:
+			state = IDLE
+	state_timer.start(rand_range(1, 3))
+
+func _process(delta):
+	match state:
+		MOVE:
+			move_state(delta)
+		CHASE:
+			chase_state(delta)
+		IDLE:
+			idle_state(delta)
+
+func move(delta):
+	velocity = velocity.move_toward(global_position.direction_to(target_location).normalized() * MAX_SPEED, ACCELERATION * delta)
+	velocity += soft_collision.push_vector()
+	velocity = move_and_slide(velocity)
+	hurt_box.knockback_vector = velocity
+
+func _on_StateTimer_timeout():
+	if state != CHASE:
+		new_state()
+
+
+func _on_Sight_area_entered(area):
+	player = area
+	state = CHASE
+
+func _on_Sight_area_exited(_area):
+	new_state()
+	MAX_SPEED = 50
+
+
+
+func _on_SpriteTimer_timeout():
+	animation_tree.set('parameters/Direction/blend_position', velocity)
+	sprite_timer.start(0.1)
+
+func _on_Hitbox_area_entered(area):
+	health -= area.damage
+	$Blink.play('play')
+	velocity = move_and_slide(area.knockback_vector)
+	if health <= 0:
+		var Explosion = explosion.instance()
+		get_parent().add_child(Explosion)
+		Explosion.global_position = global_position
+		$DeathSound.play()
+		$Hurtbox/CollisionShape2D.set_deferred('disabled', true)
+		visible = false
+		PlayerStats.experience += exp_on_kill
+		PlayerStats.rats_killed += 1
+
+func explode(area):
+	var knockback_vector = area.global_position.direction_to(global_position)*125
+	var Explosion = explosion.instance()
+	get_parent().add_child(Explosion)
+	Explosion.global_position = global_position
+	velocity = move_and_slide(knockback_vector)
+
+func shield_blast():
+	var effect = shield_effect.instance()
+	get_parent().add_child(effect)
+	effect.global_position = global_position
+
+
+func _on_DeathSound_finished():
+	queue_free()
+"
+
 [sub_resource type="ShaderMaterial" id=27]
 resource_local_to_scene = true
 shader = ExtResource( 7 )
 shader_param/active = false
+
+[sub_resource type="StreamTexture" id=31]
+load_path = "res://.import/rat.png-20d43b8ecda2a2bb476c2a6ef5f237af.stex"
 
 [sub_resource type="Animation" id=1]
 resource_name = "Down"
@@ -208,8 +339,41 @@ start_node = "Direction"
 [sub_resource type="CircleShape2D" id=21]
 radius = 5.0
 
+[sub_resource type="GDScript" id=32]
+script/source = "extends Area2D
+
+var player = null
+
+func _on_Sight_area_entered(area):
+	player = area
+
+
+func _on_AttackRange_area_entered(area):
+	player = area
+"
+
 [sub_resource type="CircleShape2D" id=22]
 radius = 93.086
+
+[sub_resource type="GDScript" id=33]
+script/source = "extends Area2D
+
+var strength = 10
+
+func colliding():
+	var areas = get_overlapping_areas()
+	return areas.size() > 0
+
+func push_vector():
+	var areas = get_overlapping_areas()
+	var push_vector = Vector2.ZERO
+	if colliding():
+		var area = areas[0]
+		push_vector = area.global_position.direction_to(global_position)
+		push_vector = push_vector.normalized() * strength
+	strength = 10
+	return push_vector
+"
 
 [sub_resource type="CircleShape2D" id=23]
 radius = 6.08276
@@ -254,13 +418,13 @@ tracks/0/keys = {
 [node name="Rat" type="KinematicBody2D"]
 collision_layer = 4
 collision_mask = 513
-script = ExtResource( 2 )
+script = SubResource( 30 )
 wander_distance = 100
 
 [node name="Sprite" type="Sprite" parent="."]
 material = SubResource( 27 )
 position = Vector2( -1, 0 )
-texture = ExtResource( 1 )
+texture = SubResource( 31 )
 hframes = 8
 frame = 4
 
@@ -299,7 +463,7 @@ autostart = true
 modulate = Color( 1, 1, 1, 0.0901961 )
 collision_layer = 0
 collision_mask = 2
-script = ExtResource( 3 )
+script = SubResource( 32 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sight"]
 visible = false
@@ -311,7 +475,7 @@ shape = SubResource( 22 )
 position = Vector2( 0, 24 )
 collision_layer = 256
 collision_mask = 256
-script = ExtResource( 4 )
+script = SubResource( 33 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SoftCollision"]
 visible = false

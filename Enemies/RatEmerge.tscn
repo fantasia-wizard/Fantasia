@@ -54,7 +54,7 @@ shape = SubResource( 9 )
 
 [node name="Enemy" type="AnimatedSprite" parent="."]
 frames = SubResource( 7 )
-frame = 2
+frame = 1
 playing = true
 script = ExtResource( 2 )
 
