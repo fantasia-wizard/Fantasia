@@ -68,11 +68,9 @@ mouse_default_cursor_shape = 2
 theme = ExtResource( 8 )
 tab_align = 0
 drag_to_rearrange_enabled = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Player" type="Tabs" parent="UI/TabContainer"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 22.0
@@ -347,7 +345,6 @@ custom_styles/normal = SubResource( 4 )
 text = "Level: "
 
 [node name="Quests" type="Tabs" parent="UI/TabContainer"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 22.0
@@ -380,20 +377,17 @@ __meta__ = {
 }
 
 [node name="EmptyQuestBar" type="Sprite" parent="UI/TabContainer/Quests/Panel"]
-position = Vector2( 131, 20 )
+position = Vector2( 71, 34 )
 texture = ExtResource( 9 )
 
 [node name="Quest Bar" type="TextureRect" parent="UI/TabContainer/Quests/Panel"]
-margin_left = 65.0
-margin_top = 13.0
-margin_right = 66.0
-margin_bottom = 27.0
+margin_left = 5.0
+margin_top = 27.0
+margin_right = 6.0
+margin_bottom = 41.0
 texture = ExtResource( 11 )
 expand = true
 stretch_mode = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Menu" type="Tabs" parent="UI/TabContainer"]
 visible = false

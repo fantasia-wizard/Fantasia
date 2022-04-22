@@ -36,7 +36,7 @@ func _process(_delta):
 		quest_bar.rect_size.x = PlayerStats.quest_progress_percent*132
 	else:
 		quest_bar.rect_size.x = 132
-		quest_label.text = 'Quest Completed!'
+		quest_label.text = 'No Quest.  Go talk to NPCs to get a quest.'
 	if get_tree().paused == false:
 		visible = false
 	if Input.is_action_just_pressed('ui_right') and visible:
