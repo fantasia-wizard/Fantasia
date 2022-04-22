@@ -23,9 +23,12 @@ func _on_Player_death():
 	transition_scene('res://Buildings/PlayerHouse.tscn', Vector2(150, 100))
 
 func _process(delta: float) -> void:
-	$CaveEntrance.visible = PlayerStats.quest_id == 3
+#	$CaveEntrance.visible = PlayerStats.quest_id == 3
+	$CaveEntrance.visible = false
+
 
 
 func _on_Area2D3_area_entered(area: Area2D) -> void:
-	if PlayerStats.quest_id == 3:
-		transition_scene('res://Cave-1/Cave-1.tscn', Vector2.ZERO)
+#	if PlayerStats.quest_id == 3:
+#		transition_scene('res://Cave-1/Cave-1.tscn', Vector2.ZERO)
+	pass
