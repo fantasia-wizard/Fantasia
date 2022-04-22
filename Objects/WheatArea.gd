@@ -1,4 +1,4 @@
 extends Area2D
 
-func explode():
+func explode(_variable):
 	pass

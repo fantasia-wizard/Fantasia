@@ -40,6 +40,7 @@ texture = ExtResource( 3 )
 [node name="Sprite" parent="." index="3"]
 position = Vector2( 0, -17 )
 frames = SubResource( 5 )
+frame = 0
 
 [node name="Label" parent="CanvasLayer/Label" index="0"]
 text = "Farmer"

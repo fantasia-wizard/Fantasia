@@ -5,8 +5,11 @@ func _ready() -> void:
 	connect('text_show', self, '_on_show_text')
 
 func _on_show_text() -> void:
-	if not 0 in PlayerStats.quests_completed:
-		text = 'I have a quest for you!  Can you go into the forest and slay 5 rats?'
-		PlayerStats.quest(0, 'Rat Slayer I', 'Slay 5 rats')
+	if not 1 in PlayerStats.quests_completed and PlayerStats.has_quest:
+		if PlayerStats.quest_id == 1:
+			text = 'Go slay 10 rats!'
+		else:
+			text = 'I have a quest for you!  Can you go slay 10 rats?'
+			PlayerStats.quest(1, 'Rat Slayer II', 'Slay 10 rats')
 	else:
-		text = 'Thanks for harvesting my wheat for me!'
+		text = 'Great job slaying rats!'
