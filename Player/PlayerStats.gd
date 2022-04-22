@@ -32,9 +32,9 @@ var level = 1
 var level_exp = [0, 50, 75, 100, 250, 500, 1000, 1500, 2000, 3000, 6000, 12000, 15000, 20000, 30000, 50000, 65000, 80000, 90000, 100000, 1]
 var level_health = [0, 0, 0, 1, 1, 1, 2, 2, 4, 4, 6, 8, 9, 10, 12, 13, 14, 15, 16, 17, 18, 20]
 var level_skill = [0, 0, 1, 0, 0, 1, 0, 1, 1, 1, 1, 1, 2, 1, 1, 2, 1, 2, 2, 2, 2]
-var quest_val_list = [5, 10, 60, 1]
-var quest_type_list = [RAT, RAT, WHEAT, BOSS]
-var quest_xp_list= [25, 75, 200, 500]
+var quest_val_list = [5, 10, 200, 30, 10]
+var quest_type_list = [RAT, RAT, WHEAT, RAT, BAT]
+var quest_xp_list= [25, 150, 400, 300, 400]
 var extra_hearts = 0
 var max_level = level_exp.size()
 var selected_spell = EXPLODE
@@ -138,7 +138,7 @@ func reset():
 	current_quest_progress = 0
 	quest_id = 0
 	quest_type = RAT
-	has_quest = true
+	has_quest = false
 	magic = 0
 	speed = 0
 	strength = 0
@@ -164,9 +164,9 @@ func save_game():
 	$TextTimer.start(1)
 
 func set_stamina(value):
-	if velocity:
-		stamina = value
+	if value < stamina:
 		StaminaTimer.start(1)
+	stamina = value
 
 func set_max_health(value):
 	max_health = float(value)
@@ -179,7 +179,7 @@ func set_health(value):
 		Healtimer.start(2)
 
 func _process(_delta):
-	if Input.is_action_just_pressed('ui_accept'):
+	if Input.is_action_just_pressed('ui_accept') and OS.is_debug_build():
 		experience += exp_to_next_level
 	if unhandled_achievement:
 		if $CanvasLayer/Achievement.rect_position.y < 2:
@@ -236,7 +236,7 @@ func set_quest_progress(value):
 		if not loading:
 			experience += quest_xp_list[quest_id]
 			quests_completed.append(quest_id)
-			achievement('Quest Completed', 'Gained ' + str(quest_xp_list[quest_id]) + ' EXP', 'Quest Completed!')
+			achievement('Quest Completed: ' + quest_text, 'Gained ' + str(quest_xp_list[quest_id]) + ' EXP', 'Quest Completed!')
 
 func set_rats_killed(value):
 	var new_value = value - rats_killed
@@ -267,14 +267,14 @@ func _on_StaminaTimer_timeout():
 		stamina += 0.3*(speed+1)
 	else:
 		stamina += 0.5*(speed+1)
-	StaminaTimer.start(0.01)
+	StaminaTimer.start(0.02/((((speed+1))+4)/3))
 
 
 func _on_HealTimer_timeout():
 	if stamina > 25:
 		self.health += regen_speed
 	if health < max_health:
-		Healtimer.start(2)
+		Healtimer.start(2/(((speed+1)+3)/4))
 
 
 

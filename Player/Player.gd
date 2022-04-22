@@ -17,9 +17,10 @@ var velocity = Vector2.ZERO
 var input_vector = Vector2.DOWN
 var speed = MAX_SPEED
 var accel = ACCELERATION
-var state = MOVE
+var state = MOVE setget set_state
 var damage_effect = preload('res://Environment Effects/DamageEffect.tscn')
 var rolled = false
+export var alt_player = preload('res://Player/charact2r(red).png')
 
 onready var animation_tree = $AnimationTree
 onready var animation_state = animation_tree.get('parameters/playback')
@@ -33,10 +34,13 @@ onready var animation_player = $AnimationPlayer
 signal death
 
 func _ready():
+	if OS.is_debug_build():
+		$Sprite.texture = alt_player
 	animation_tree.set('parameters/Move/blend_position', input_vector)
 	animation_tree.set('parameters/Idle/blend_position', input_vector)
 	animation_tree.set('parameters/Attack/blend_position', input_vector)
 	global_position = PlayerStats.start_location
+	$Camera2D.global_position = global_position
 	PlayerStats.start_location = Vector2.ZERO
 	randomize()
 	blink.play('stop')
@@ -49,7 +53,7 @@ func _process(delta):
 		emit_signal('death')
 		PlayerStats.health = 1.0
 		PlayerStats.stamina = 0.0
-	match(state):
+	match(self.state):
 		MOVE:
 			move_state(delta)
 		ATTACK:
@@ -58,19 +62,19 @@ func _process(delta):
 			match(PlayerStats.selected_spell):
 				0.0:
 					animation_state.travel('Explosion')
-					velocity = Vector2.ZERO
+					velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta*abs(sqrt(Vector2.ZERO.distance_to(velocity))+1)/5)
 					animation_tree.set('parameters/Idle/blend_position', Vector2.DOWN)
 					animation_tree.set('parameters/Attack/blend_position', Vector2.DOWN)
 				1.0:
 					animation_state.travel('ShieldSpell')
-					velocity = Vector2.ZERO
+					velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta*abs(sqrt(Vector2.ZERO.distance_to(velocity))+1)/5)
 					animation_tree.set('parameters/Idle/blend_position', Vector2.DOWN)
 					animation_tree.set('parameters/Attack/blend_position', Vector2.DOWN)
 	velocity = move_and_slide(velocity)
 	if Input.is_action_just_pressed('attack'):
-		state = ATTACK
+		set_state(ATTACK)
 	if Input.is_action_just_pressed('spell'):
-		state = SPELL
+		set_state(SPELL)
 
 func move_state(delta):
 	if Input.is_action_pressed('run') and PlayerStats.stamina > 0:
@@ -90,7 +94,7 @@ func move_state(delta):
 		animation_tree.set('parameters/Move/blend_position', input_vector)
 		animation_tree.set('parameters/Idle/blend_position', input_vector)
 		animation_tree.set('parameters/Attack/blend_position', input_vector)
-		hitbox.knockback_vector = velocity*MAX_SPEED
+		hurtbox.knockback_vector = velocity.normalized()*100
 		animation_state.travel('Move')
 	else:
 		velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta*abs(sqrt(Vector2.ZERO.distance_to(velocity))+1)/10)
@@ -129,3 +133,11 @@ func text_effect(value):
 	get_parent().add_child(effect)
 	effect.global_position = global_position+Vector2(0, 5)
 	effect.value = value
+
+func set_state(value):
+	state = value
+	if state == ATTACK or state == SPELL:
+		if PlayerStats.stamina >= 15:
+			PlayerStats.stamina -= 15
+		else:
+			state = MOVE

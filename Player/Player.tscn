@@ -1,6 +1,6 @@
 [gd_scene load_steps=66 format=2]
 
-[ext_resource path="res://Player/charact2r(red).png" type="Texture" id=1]
+[ext_resource path="res://Player/charact2r.png" type="Texture" id=1]
 [ext_resource path="res://Player/Player.gd" type="Script" id=2]
 [ext_resource path="res://Shadows/14p shadow.png" type="Texture" id=3]
 [ext_resource path="res://Player/AnimationTree.gd" type="Script" id=4]
@@ -831,8 +831,9 @@ tracks/0/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="CircleShape2D" id=26]
-radius = 6.0
+[sub_resource type="CapsuleShape2D" id=64]
+radius = 3.00001
+height = 5.99998
 
 [sub_resource type="OccluderPolygon2D" id=27]
 polygon = PoolVector2Array( -4, 4, 4, 4, 6, 2, 6, 0, 4, -2, -4, -2, -6, 0, -6, 2 )
@@ -909,12 +910,13 @@ anims/start = SubResource( 34 )
 anims/stop = SubResource( 35 )
 
 [node name="Area2D" type="Area2D" parent="."]
-visible = false
 collision_layer = 2
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource( 26 )
+position = Vector2( 0, 1 )
+rotation = 1.57079
+shape = SubResource( 64 )
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="."]
 visible = false
