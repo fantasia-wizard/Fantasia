@@ -83,7 +83,7 @@ func _on_StateTimer_timeout():
 func _on_Hitbox_area_entered(area):
 	health -= area.damage
 	$Blink.play('play')
-	velocity = move_and_slide(area.knockback_vector * 100.0)
+#	velocity = move_and_slide(area.knockback_vector * 100.0)
 	if health <= 0:
 		PlayerStats.achievement('...of Antioch.', 'Kill a rabbit.', 'Acheivement')
 		var Explosion = explosion.instance()
@@ -96,7 +96,7 @@ func _on_Hitbox_area_entered(area):
 		target_location = global_position + area.global_position.direction_to(global_position)*500
 		state = MOVE
 
-func explode():
+func explode(_area):
 	var Explosion = explosion.instance()
 	get_parent().add_child(Explosion)
 	Explosion.global_position = global_position

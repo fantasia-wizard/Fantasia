@@ -6,10 +6,9 @@
 [ext_resource path="res://Buildings/TownHouse-1.gd" type="Script" id=4]
 [ext_resource path="res://Environment Effects/doorLight.png" type="Texture" id=5]
 [ext_resource path="res://Player/Camera.tscn" type="PackedScene" id=6]
-[ext_resource path="res://NPC/Richard.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Overlap Detection/Door.tscn" type="PackedScene" id=7]
 
-[sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 8, 1.5 )
+[sub_resource type="RectangleShape2D" id=1]
 
 [node name="TownHouse-1" type="Node2D"]
 script = ExtResource( 4 )
@@ -49,14 +48,6 @@ __meta__ = {
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
 polygon = PoolVector2Array( 61, -19, -61, -19, -61, 45, 20, 45, 20, 51, 36, 51, 36, 45, 61, 45, 61, -18, 64, -18, 64, -18, 64, 48, 49, 69, -43, 68, -64, 48, -64, 3.87852, -64, -48, 64, -48, 64, -18, 61, -18 )
 
-[node name="Door" type="Area2D" parent="."]
-collision_layer = 0
-collision_mask = 2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Door"]
-position = Vector2( 28, 49.5 )
-shape = SubResource( 2 )
-
 [node name="YSort" type="YSort" parent="."]
 
 [node name="Player" parent="YSort" instance=ExtResource( 3 )]
@@ -64,9 +55,6 @@ position = Vector2( 27, 39 )
 
 [node name="Camera2D" parent="YSort/Player" instance=ExtResource( 6 )]
 zoom = Vector2( 0.7, 0.7 )
-
-[node name="Richard" parent="YSort" instance=ExtResource( 7 )]
-position = Vector2( -21, 2 )
 
 [node name="Light2D" type="Light2D" parent="."]
 position = Vector2( 27.5, 44.4532 )
@@ -87,4 +75,9 @@ shadow_color = Color( 0.196078, 0.203922, 0.243137, 0 )
 shadow_gradient_length = 50.0
 shadow_filter_smooth = 64.0
 
-[connection signal="area_entered" from="Door" to="." method="_on_Door_area_entered"]
+[node name="Door" parent="." instance=ExtResource( 7 )]
+position = Vector2( 28, 58 )
+destination = "res://Town/Town-1.tscn"
+location = Vector2( -86, -552 )
+save = true
+shape = SubResource( 1 )
