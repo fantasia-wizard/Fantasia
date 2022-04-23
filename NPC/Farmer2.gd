@@ -6,8 +6,8 @@ func _ready() -> void:
 
 func _on_show_text() -> void:
 	if PlayerStats.level >= 5:
-		if not 4 in PlayerStats.quests_completed and PlayerStats.has_quest:
-			if PlayerStats.quest_id == 4:
+		if not 4 in PlayerStats.quests_completed:
+			if PlayerStats.quest_id == 4 and PlayerStats.has_quest:
 				text='Go slay 10 bats.  You can find them north of the forest area that you have already explored.'
 			else:
 				text = 'I have a quest for you!  Can you go slay 10 bats?  You can find them north of the forest area you have already explored.'
