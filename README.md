@@ -4,6 +4,9 @@ Open source Top Down Action RPG.
 To download compiled versions or play in your browser: <a href="fantasia-wizard.github.io">click here</a>.<br>
 New updates almost every Friday.
 
+Aplha 1.5.1, 23 Apr 2022:
+Updates to the tutorial.
+
 Alpha 1.5, 22 Apr 2022:
 A new town north of the farmer's house, Many bug fixes, upgrades to NPC conversation, more NPCs, a tutorial level, more quests, and a more responsive combat system.
 
