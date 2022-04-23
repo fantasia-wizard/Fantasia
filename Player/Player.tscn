@@ -1,4 +1,4 @@
-[gd_scene load_steps=66 format=2]
+[gd_scene load_steps=70 format=2]
 
 [ext_resource path="res://Player/charact2r.png" type="Texture" id=1]
 [ext_resource path="res://Player/Player.gd" type="Script" id=2]
@@ -282,9 +282,52 @@ tracks/4/keys = {
 "values": [ Vector2( 0, 0 ) ]
 }
 
+[sub_resource type="Animation" id=65]
+resource_name = "Earthquake"
+length = 0.7
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 57, 58, 59, 60, 61, 62, 63 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Earthquake/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.3, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ true, false, true ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.3 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "earthquake"
+} ]
+}
+
 [sub_resource type="Animation" id=55]
 resource_name = "ExplodeSpellEnd"
 length = 0.12
+step = 0.01
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
@@ -304,7 +347,7 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0.1 ),
+"times": PoolRealArray( 0.08 ),
 "transitions": PoolRealArray( 1 ),
 "values": [ {
 "args": [  ],
@@ -600,6 +643,18 @@ tracks/7/keys = {
 "update": 0,
 "values": [ Vector2( 1.25, 1.25 ) ]
 }
+tracks/8/type = "value"
+tracks/8/path = NodePath("Earthquake/CollisionShape2D:disabled")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ true ]
+}
 
 [sub_resource type="Animation" id=59]
 resource_name = "ShieldSpell"
@@ -679,6 +734,9 @@ blend_point_3/pos = Vector2( 1, 0 )
 min_space = Vector2( -1, -1.1 )
 max_space = Vector2( 1, 1.1 )
 blend_mode = 1
+
+[sub_resource type="AnimationNodeAnimation" id=66]
+animation = "Earthquake"
 
 [sub_resource type="AnimationNodeAnimation" id=56]
 animation = "ExplodeSpellEnd"
@@ -765,9 +823,17 @@ auto_advance = true
 switch_mode = 2
 auto_advance = true
 
+[sub_resource type="AnimationNodeStateMachineTransition" id=67]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=68]
+switch_mode = 2
+auto_advance = true
+
 [sub_resource type="AnimationNodeStateMachine" id=12]
 states/Attack/node = SubResource( 45 )
 states/Attack/position = Vector2( 229, 178 )
+states/Earthquake/node = SubResource( 66 )
+states/Earthquake/position = Vector2( 519.154, -52 )
 states/ExplodeSpellEnd/node = SubResource( 56 )
 states/ExplodeSpellEnd/position = Vector2( 551, 42 )
 states/Explosion/node = SubResource( 49 )
@@ -778,9 +844,9 @@ states/Move/node = SubResource( 11 )
 states/Move/position = Vector2( 142, 61 )
 states/ShieldSpell/node = SubResource( 61 )
 states/ShieldSpell/position = Vector2( 396, 105 )
-transitions = [ "Idle", "Move", SubResource( 23 ), "Move", "Idle", SubResource( 24 ), "Idle", "Attack", SubResource( 50 ), "Idle", "Explosion", SubResource( 51 ), "Attack", "Idle", SubResource( 54 ), "Explosion", "ExplodeSpellEnd", SubResource( 57 ), "ExplodeSpellEnd", "Idle", SubResource( 58 ), "Idle", "ShieldSpell", SubResource( 62 ), "ShieldSpell", "ExplodeSpellEnd", SubResource( 63 ) ]
+transitions = [ "Idle", "Move", SubResource( 23 ), "Move", "Idle", SubResource( 24 ), "Idle", "Attack", SubResource( 50 ), "Idle", "Explosion", SubResource( 51 ), "Attack", "Idle", SubResource( 54 ), "Explosion", "ExplodeSpellEnd", SubResource( 57 ), "ExplodeSpellEnd", "Idle", SubResource( 58 ), "Idle", "ShieldSpell", SubResource( 62 ), "ShieldSpell", "ExplodeSpellEnd", SubResource( 63 ), "Idle", "Earthquake", SubResource( 67 ), "Earthquake", "ExplodeSpellEnd", SubResource( 68 ) ]
 start_node = "Idle"
-graph_offset = Vector2( 20.154, -55 )
+graph_offset = Vector2( 52.154, -42 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=13]
 
@@ -867,7 +933,7 @@ texture = ExtResource( 3 )
 material = SubResource( 36 )
 position = Vector2( 0, -12 )
 texture = ExtResource( 1 )
-hframes = 57
+hframes = 64
 frame = 5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -881,6 +947,7 @@ anims/AtackLeft = SubResource( 37 )
 "anims/Attack Right" = SubResource( 38 )
 anims/AttackDown = SubResource( 39 )
 anims/AttackUp = SubResource( 40 )
+anims/Earthquake = SubResource( 65 )
 anims/ExplodeSpellEnd = SubResource( 55 )
 anims/ExplosionSpell = SubResource( 48 )
 anims/IdleDown = SubResource( 14 )
@@ -897,7 +964,6 @@ anims/ShieldSpell = SubResource( 59 )
 [node name="AnimationTree" type="AnimationTree" parent="."]
 tree_root = SubResource( 12 )
 anim_player = NodePath("../AnimationPlayer")
-active = true
 parameters/playback = SubResource( 13 )
 parameters/Attack/blend_position = Vector2( 0, 0 )
 parameters/Idle/blend_position = Vector2( 0, 0 )
@@ -905,6 +971,7 @@ parameters/Move/blend_position = Vector2( 0, 0 )
 script = ExtResource( 4 )
 
 [node name="BlinkPlayer" type="AnimationPlayer" parent="."]
+playback_process_mode = 0
 anims/RESET = SubResource( 33 )
 anims/start = SubResource( 34 )
 anims/stop = SubResource( 35 )
@@ -932,6 +999,7 @@ position = Vector2( -1.45705e-06, -16.6667 )
 rotation = 3.14159
 collision_layer = 576
 collision_mask = 8
+knockback_strength = 10
 
 [node name="CollisionShape2D" parent="Rotate/Hurtbox" index="0"]
 position = Vector2( 4, 0.333331 )
@@ -963,10 +1031,21 @@ scale = Vector2( 1.25, 1.25 )
 shape = SubResource( 53 )
 disabled = true
 
+[node name="Earthquake" type="Area2D" parent="."]
+collision_layer = 64
+collision_mask = 8
+script = ExtResource( 8 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Earthquake"]
+position = Vector2( 0, 1 )
+scale = Vector2( 1.25, 1.25 )
+shape = SubResource( 53 )
+disabled = true
+
 [node name="Shield" type="Area2D" parent="."]
 visible = false
-collision_layer = 256
-collision_mask = 256
+collision_layer = 64
+collision_mask = 8
 script = ExtResource( 9 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Shield"]

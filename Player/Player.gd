@@ -12,6 +12,7 @@ enum{
 enum{
 	EXPLODE
 	SHIELD
+	EARTHQUAKE
 }
 var velocity = Vector2.ZERO
 var input_vector = Vector2.DOWN
@@ -20,7 +21,7 @@ var accel = ACCELERATION
 var state = MOVE setget set_state
 var damage_effect = preload('res://Environment Effects/DamageEffect.tscn')
 var rolled = false
-export var alt_player = preload('res://Player/charact2r(red).png')
+export var alt_player = preload('res://Player/charact2r(dev).png')
 
 onready var animation_tree = $AnimationTree
 onready var animation_state = animation_tree.get('parameters/playback')
@@ -70,6 +71,11 @@ func _process(delta):
 					velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta*abs(sqrt(Vector2.ZERO.distance_to(velocity))+1)/5)
 					animation_tree.set('parameters/Idle/blend_position', Vector2.DOWN)
 					animation_tree.set('parameters/Attack/blend_position', Vector2.DOWN)
+				2.0:
+					animation_state.travel('Earthquake')
+					velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta*abs(sqrt(Vector2.ZERO.distance_to(velocity))+1)/5)
+					animation_tree.set('parameters/Idle/blend_position', Vector2.DOWN)
+					animation_tree.set('parameters/Attack/blend_position', Vector2.DOWN)
 	velocity = move_and_slide(velocity)
 	if Input.is_action_just_pressed('attack'):
 		set_state(ATTACK)
@@ -94,7 +100,6 @@ func move_state(delta):
 		animation_tree.set('parameters/Move/blend_position', input_vector)
 		animation_tree.set('parameters/Idle/blend_position', input_vector)
 		animation_tree.set('parameters/Attack/blend_position', input_vector)
-		hurtbox.knockback_vector = velocity.normalized()*100
 		animation_state.travel('Move')
 	else:
 		velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta*abs(sqrt(Vector2.ZERO.distance_to(velocity))+1)/10)
@@ -116,7 +121,7 @@ func attack_state(delta):
 func _on_Hitbox_area_entered(area):
 	blink.play('start')
 	PlayerStats.health -= area.damage
-	velocity = move_and_slide(area.knockback_vector * area.damage)
+	velocity = move_and_slide(area.global_position.direction_to(global_position)* area.knockback_strength)
 	timer.start(0.5)
 	hitbox.set_deferred('monitoring', false)
 
@@ -135,9 +140,15 @@ func text_effect(value):
 	effect.value = value
 
 func set_state(value):
+	var prev_state = state
 	state = value
 	if state == ATTACK or state == SPELL:
 		if PlayerStats.stamina >= 15:
-			PlayerStats.stamina -= 15
+			if prev_state != value:
+				PlayerStats.stamina -= 15
 		else:
 			state = MOVE
+
+func earthquake():
+	PlayerStats.camera_shaking = true
+	PlayerStats.shake_type = 1

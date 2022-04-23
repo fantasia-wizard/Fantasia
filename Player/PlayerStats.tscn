@@ -21,6 +21,7 @@ font_data = ExtResource( 4 )
 [sub_resource type="StyleBoxEmpty" id=3]
 
 [node name="PlayerStats" type="Node"]
+pause_mode = 1
 script = ExtResource( 1 )
 
 [node name="HealTimer" type="Timer" parent="."]
@@ -33,6 +34,7 @@ one_shot = true
 one_shot = true
 
 [node name="AchievementTimer" type="Timer" parent="."]
+pause_mode = 1
 one_shot = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]

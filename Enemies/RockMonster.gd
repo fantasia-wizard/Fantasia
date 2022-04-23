@@ -135,7 +135,7 @@ func _on_Sight_area_exited(_area):
 func _on_Hitbox_area_entered(area):
 	health -= area.damage
 	$Blink.play('play')
-	velocity = move_and_slide(area.knockback_vector * 100.0)
+	velocity = move_and_slide(area.global_position.direction_to(global_position)* area.knockback_strength)
 	if health <= 0:
 		var Explosion = explosion.instance()
 		get_parent().add_child(Explosion)

@@ -3,6 +3,7 @@ extends Node
 enum{ #spells
 	EXPLODE
 	SHIELD
+	EARTHQUAKE
 }
 enum{ #quests
 	RAT
@@ -32,9 +33,9 @@ var level = 1
 var level_exp = [0, 50, 75, 100, 250, 500, 1000, 1500, 2000, 3000, 6000, 12000, 15000, 20000, 30000, 50000, 65000, 80000, 90000, 100000, 1]
 var level_health = [0, 0, 0, 1, 1, 1, 2, 2, 4, 4, 6, 8, 9, 10, 12, 13, 14, 15, 16, 17, 18, 20]
 var level_skill = [0, 0, 1, 0, 0, 1, 0, 1, 1, 1, 1, 1, 2, 1, 1, 2, 1, 2, 2, 2, 2]
-var quest_val_list = [5, 10, 200, 30, 10]
-var quest_type_list = [RAT, RAT, WHEAT, RAT, BAT]
-var quest_xp_list= [25, 150, 400, 300, 400]
+var quest_val_list = [5, 10, 200, 30, 10, 1]
+var quest_type_list = [RAT, RAT, WHEAT, RAT, BAT, RAT]
+var quest_xp_list= [25, 150, 400, 300, 400, 0]
 var extra_hearts = 0
 var max_level = level_exp.size()
 var selected_spell = EXPLODE
@@ -62,7 +63,8 @@ var achievements = []
 var unhandled_achievement = false
 var remove_achievement = false
 var running = false
-
+var camera_shaking = false
+var shake_type = 0 #0-Explosion(i.e bomb), 1-earthquake
 func _ready():
 	label.visible = false
 
@@ -118,6 +120,7 @@ func load_game():
 	loading = false
 
 func reset():
+	selected_spell = EXPLODE
 	has_quest = false
 	wheat_harvested = 0
 	level = 1
@@ -179,7 +182,9 @@ func set_health(value):
 		Healtimer.start(2)
 
 func _process(_delta):
-	if Input.is_action_just_pressed('ui_accept') and OS.is_debug_build():
+	if get_tree().paused:
+		$CanvasLayer/Achievement.visible = false
+	if Input.is_action_just_pressed('ui_focus_next') and OS.is_debug_build():
 		experience += exp_to_next_level
 	if unhandled_achievement:
 		if $CanvasLayer/Achievement.rect_position.y < 2:

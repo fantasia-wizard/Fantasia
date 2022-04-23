@@ -15,6 +15,8 @@ func fire():
 	bomb_sprite.playing = true
 
 func _on_AnimatedSprite_animation_finished():
+	PlayerStats.camera_shaking = true
+	PlayerStats.shake_type = 0
 	$Area2D.queue_free()
 	bomb_sprite.queue_free()
 	bomb_explosion.disabled = false

@@ -77,7 +77,6 @@ func move(delta):
 	velocity = velocity.move_toward(global_position.direction_to(target_location).normalized() * MAX_SPEED, ACCELERATION * delta)
 	velocity += soft_collision.push_vector()
 	velocity = move_and_slide(velocity)
-	hurt_box.knockback_vector = velocity
 	if velocity.x > 0:
 		$AnimatedSprite.flip_h = true
 	else:
@@ -105,7 +104,7 @@ func _on_SpriteTimer_timeout():
 func _on_Hitbox_area_entered(area):
 	health -= area.damage
 	$Blink.play('play')
-	velocity = move_and_slide(area.knockback_vector * 100.0)
+	velocity = move_and_slide(area.global_position.direction_to(global_position)* area.knockback_strength)
 	if health <= 0:
 		var Explosion = explosion.instance()
 		get_parent().add_child(Explosion)
@@ -128,11 +127,6 @@ func shield_blast():
 	var ShieldBlast = _shield_blast.instance()
 	get_parent().add_child(ShieldBlast)
 	ShieldBlast.global_position = global_position
-
-
-func _on_Hurtbox_area_entered(area):
-	velocity = move_and_slide(velocity.normalized()*10)
-
 
 func _on_DeathSound_finished():
 	queue_free()
