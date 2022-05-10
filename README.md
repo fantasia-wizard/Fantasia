@@ -14,7 +14,7 @@ Added a miniboss
 
 <h2>An extra special thanks</h2>
 Andrii Gook, who made a joystick plugin for Godot.<br>
-https://godotengine.org/asset-library/asset/591
+https://godotengine.org/asset-library/asset/591<br><br>
 
 
 Tomeyro, who made an sfx plugin for Godot.<br>
