@@ -8,10 +8,12 @@ To download compiled versions or play in your browser: https://fantasia-wizard.g
 Versions prior to alpha 1.6 were used internally for testing.
 
 <h3>Alpha 1.6</h3>
-Fixed a bug that caused NPCs to display the incorrect dialogue.
-Added more NPCs
-Added a miniboss
-
+<ul>
+<li>Fixed a bug that caused NPCs to display the incorrect dialogue.</li>
+<li>Added more NPCs</li>
+<li>Added a miniboss</li>
+</ul>
+  
 <h2>An extra special thanks</h2>
 Andrii Gook, who made a joystick plugin for Godot.<br>
 https://godotengine.org/asset-library/asset/591<br><br>
