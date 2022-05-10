@@ -33,7 +33,7 @@ Peter Hull, who made the VT323 font.<br>
 https://fonts.google.com/specimen/VT323
 
 
-(music coming soon)
+(music coming soon)<br>
 cgMusic, an AI to generate music.<br>
 http://codeminion.com/blogs/maciek/2008/05/cgmusic-computers-create-music/
 
