@@ -2,7 +2,7 @@
 Open source Top Down Action RPG.
 
 To download compiled versions or play in your browser: <a href="fantasia-wizard.github.io">click here</a>.<br>
-New updates almost every Friday.
+New updates whenever I feel like it.
 
 Aplha 1.5.1, 23 Apr 2022:
 Updates to the tutorial.
