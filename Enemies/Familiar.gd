@@ -1,0 +1,137 @@
+extends KinematicBody2D
+
+enum{
+	MOVE
+	CHASE
+	IDLE
+}
+
+onready var animated_sprite = $AnimatedSprite
+onready var state_timer = $StateTimer
+onready var explosion = preload('res://Environment Effects/explosion.tscn')
+onready var hurt_box = $Hurtbox
+
+
+var MAX_SPEED = 50
+var ACCELERATION = 500
+var wander_distance = 100
+var max_health = 3
+var exp_on_kill = 25
+
+var _shield_blast = preload('res://Environment Effects/ShieldBlast.tscn')
+var state = MOVE
+var target = null
+var velocity = Vector2.ZERO
+var start_location = get_transform()
+var target_location = get_transform()
+var health = max_health
+
+func _ready():
+	max_health = 3+PlayerStats.magic
+	health = max_health
+	$Hurtbox.damage = 1 + PlayerStats.magic
+	animated_sprite.frame = rand_range(0, 3)
+	hurt_box.damage = 1
+	start_location = global_position
+	target_location = global_position
+	new_state()
+	$DeathSound.volume_db = -20
+
+func move_state(delta):
+	MAX_SPEED = 40
+	if global_position.distance_to(target_location) < 15 or is_on_wall():
+		target_location = global_position + Vector2(rand_range(-wander_distance, wander_distance) * 2, rand_range(-wander_distance, wander_distance) * 2)
+	if global_position.distance_to(start_location) > 100:
+		target_location = start_location + Vector2(rand_range(-wander_distance, wander_distance) * 2, rand_range(-wander_distance, wander_distance) * 2)
+	move(delta)
+
+
+func chase_state(delta):
+	MAX_SPEED = 100
+	target_location = target.global_position
+	move(delta)
+
+
+func idle_state(delta):
+	velocity = velocity.move_toward(Vector2.ZERO, ACCELERATION * delta * 0.1)
+	velocity = move_and_slide(velocity)
+
+func new_state():
+	var rand_num = randi() %2
+	match rand_num:
+		0:
+			state = MOVE
+		1:
+			state = IDLE
+	state_timer.start(rand_range(1, 3))
+
+func _process(delta):
+	if $PlayerDetection/Area2D.get_overlapping_areas().size() > 0:
+		MAX_SPEED = 50
+		match state:
+			MOVE:
+				move_state(delta)
+			CHASE:
+				chase_state(delta)
+			IDLE:
+				idle_state(delta)
+	else:
+		MAX_SPEED = 100
+		target_location = PlayerStats.location
+		move(delta)
+
+func move(delta):
+	velocity = velocity.move_toward(global_position.direction_to(target_location).normalized() * MAX_SPEED, ACCELERATION * delta)
+	velocity = move_and_slide(velocity)
+	if velocity.x > 0:
+		$AnimatedSprite.flip_h = true
+	else:
+		$AnimatedSprite.flip_h = false
+
+func _on_StateTimer_timeout():
+	if state != CHASE:
+		new_state()
+
+
+func _on_Sight_area_entered(area):
+	target = area
+	state = CHASE
+
+func _on_Sight_area_exited(_area):
+	new_state()
+	MAX_SPEED = 50
+
+func _on_Hitbox_area_entered(area):
+	health -= area.damage
+	$Blink.play('play')
+	velocity = move_and_slide(area.global_position.direction_to(global_position)* area.knockback_strength)
+	if health <= 0:
+		var Explosion = explosion.instance()
+		get_parent().add_child(Explosion)
+		Explosion.global_position = global_position
+		$DeathSound.play()
+		$Hurtbox/CollisionShape2D.set_deferred('disabled', true)
+		$Hurtbox/CollisionShape2D2.set_deferred('disabled', true)
+		visible = false
+		PlayerStats.experience += exp_on_kill
+		PlayerStats.bats_killed += 1
+
+func explode(area):
+	var knockback_vector = area.global_position.direction_to(global_position)*150
+	var Explosion = explosion.instance()
+	get_parent().add_child(Explosion)
+	Explosion.global_position = global_position
+	velocity = move_and_slide(knockback_vector)
+
+func shield_blast():
+	var ShieldBlast = _shield_blast.instance()
+	get_parent().add_child(ShieldBlast)
+	ShieldBlast.global_position = global_position
+
+func _on_DeathSound_finished():
+	queue_free()
+
+
+func _on_Hurtbox_area_entered(area: Area2D) -> void:
+	var random_vector = Vector2(rand_range(-1, 1), rand_range(-1, 1))
+	velocity = move_and_slide((velocity.normalized()+random_vector)/2.0).normalized()*MAX_SPEED*2

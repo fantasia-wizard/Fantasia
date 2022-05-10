@@ -1,0 +1,514 @@
+[gd_scene load_steps=35 format=2]
+
+[ext_resource path="res://Overlap Detection/Hitbox.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Overlap Detection/Hurtbox.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Environment Effects/Blink.gdshader" type="Shader" id=7]
+[ext_resource path="res://Sounds/death_sound.tres" type="AudioStream" id=8]
+
+[sub_resource type="GDScript" id=30]
+script/source = "extends KinematicBody2D
+
+enum{
+	MOVE
+	CHASE
+	IDLE
+}
+
+onready var animation_tree = $AnimationTree
+onready var animation_state = animation_tree.get('parameters/playback')
+onready var state_timer = $StateTimer
+onready var soft_collision = $SoftCollision
+onready var sprite_timer = $SpriteTimer
+onready var explosion = preload('res://Environment Effects/explosion.tscn')
+onready var hurt_box = $Hurtbox
+
+export var MAX_SPEED = 50
+export var ACCELERATION = 500
+export var wander_distance = 5
+export var max_health = 2
+export var exp_on_kill = 5
+
+var shield_effect = preload('res://Environment Effects/ShieldBlast.tscn')
+var state = MOVE
+var player = null
+var velocity = Vector2.ZERO
+var start_location = get_transform()
+var target_location = get_transform()
+var health = max_health
+var last_seen_pos = Vector2.ZERO
+
+func _ready():
+	animation_state.travel('Direction')
+	start_location = global_position
+	target_location = global_position
+	new_state()
+	$DeathSound.volume_db = -20
+
+func move_state(delta):
+	if global_position.distance_to(target_location) < 15 or is_on_wall():
+		target_location = global_position + Vector2(rand_range(-wander_distance, wander_distance) * 2, rand_range(-wander_distance, wander_distance) * 2)
+	if global_position.distance_to(start_location) > 100:
+		target_location = start_location + Vector2(rand_range(-wander_distance, wander_distance) * 2, rand_range(-wander_distance, wander_distance) * 2)
+	move(delta)
+
+
+func chase_state(delta):
+	MAX_SPEED = 75
+	target_location = player.global_position
+	move(delta)
+
+
+func idle_state(delta):
+	velocity = velocity.move_toward(Vector2.ZERO, ACCELERATION * delta * 0.1)
+	velocity += soft_collision.push_vector()
+	velocity = move_and_slide(velocity)
+
+func new_state():
+	var rand_num = randi() %2
+	match rand_num:
+		0:
+			state = MOVE
+		1:
+			state = IDLE
+	state_timer.start(rand_range(1, 3))
+
+func _process(delta):
+	match state:
+		MOVE:
+			move_state(delta)
+		CHASE:
+			chase_state(delta)
+		IDLE:
+			idle_state(delta)
+
+func move(delta):
+	velocity = velocity.move_toward(global_position.direction_to(target_location).normalized() * MAX_SPEED, ACCELERATION * delta)
+	velocity += soft_collision.push_vector()
+	velocity = move_and_slide(velocity)
+
+
+func _on_StateTimer_timeout():
+	if state != CHASE:
+		new_state()
+
+
+func _on_Sight_area_entered(area):
+	player = area
+	state = CHASE
+
+func _on_Sight_area_exited(_area):
+	new_state()
+	MAX_SPEED = 50
+
+
+
+func _on_SpriteTimer_timeout():
+	animation_tree.set('parameters/Direction/blend_position', velocity)
+	sprite_timer.start(0.1)
+
+func _on_Hitbox_area_entered(area):
+	health -= area.damage
+	$Blink.play('play')
+	velocity = move_and_slide(area.global_position.direction_to(global_position)* area.knockback_strength)
+	if health <= 0:
+		var Explosion = explosion.instance()
+		get_parent().add_child(Explosion)
+		Explosion.global_position = global_position
+		$DeathSound.play()
+		$Hurtbox/CollisionShape2D.set_deferred('disabled', true)
+		visible = false
+		PlayerStats.experience += exp_on_kill
+		PlayerStats.rats_killed += 1
+
+func explode(area):
+	var knockback_vector = area.global_position.direction_to(global_position)*125
+	var Explosion = explosion.instance()
+	get_parent().add_child(Explosion)
+	Explosion.global_position = global_position
+	velocity = move_and_slide(knockback_vector)
+
+func shield_blast():
+	var effect = shield_effect.instance()
+	get_parent().add_child(effect)
+	effect.global_position = global_position
+
+
+func _on_DeathSound_finished():
+	queue_free()
+
+
+func _on_Hurtbox_area_entered(area: Area2D) -> void:
+	velocity = move_and_slide(velocity)
+"
+
+[sub_resource type="ShaderMaterial" id=27]
+resource_local_to_scene = true
+shader = ExtResource( 7 )
+shader_param/active = false
+
+[sub_resource type="StreamTexture" id=31]
+load_path = "res://.import/rat.png-20d43b8ecda2a2bb476c2a6ef5f237af.stex"
+
+[sub_resource type="Animation" id=1]
+resource_name = "Down"
+length = 0.1
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 6 ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "DownLeft"
+length = 0.1
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 7 ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "DownRight"
+length = 0.1
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 5 ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "Left"
+length = 0.1
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
+
+[sub_resource type="Animation" id=5]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 4 ]
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "Right"
+length = 0.1
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 4 ]
+}
+
+[sub_resource type="Animation" id=7]
+resource_name = "Up"
+length = 0.1
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 2 ]
+}
+
+[sub_resource type="Animation" id=8]
+resource_name = "UpLeft"
+length = 0.1
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 1 ]
+}
+
+[sub_resource type="Animation" id=9]
+resource_name = "UpRight"
+length = 0.1
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 3 ]
+}
+
+[sub_resource type="AnimationNodeAnimation" id=11]
+animation = "Left"
+
+[sub_resource type="AnimationNodeAnimation" id=12]
+animation = "UpLeft"
+
+[sub_resource type="AnimationNodeAnimation" id=13]
+animation = "DownLeft"
+
+[sub_resource type="AnimationNodeAnimation" id=15]
+animation = "Right"
+
+[sub_resource type="AnimationNodeAnimation" id=16]
+animation = "UpRight"
+
+[sub_resource type="AnimationNodeAnimation" id=17]
+animation = "DownRight"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id=18]
+blend_point_0/node = SubResource( 11 )
+blend_point_0/pos = Vector2( -1, 0 )
+blend_point_1/node = SubResource( 12 )
+blend_point_1/pos = Vector2( -0.7, -0.3 )
+blend_point_2/node = SubResource( 13 )
+blend_point_2/pos = Vector2( -0.7, 0.3 )
+blend_point_3/node = SubResource( 15 )
+blend_point_3/pos = Vector2( 1, 0 )
+blend_point_4/node = SubResource( 16 )
+blend_point_4/pos = Vector2( 0.6, -0.3 )
+blend_point_5/node = SubResource( 17 )
+blend_point_5/pos = Vector2( 0.6, 0.3 )
+blend_mode = 1
+
+[sub_resource type="AnimationNodeStateMachine" id=19]
+states/Direction/node = SubResource( 18 )
+states/Direction/position = Vector2( 141, 90 )
+start_node = "Direction"
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=20]
+
+[sub_resource type="CircleShape2D" id=21]
+radius = 5.0
+
+[sub_resource type="GDScript" id=32]
+script/source = "extends Area2D
+
+var player = null
+
+func _on_Sight_area_entered(area):
+	player = area
+
+
+func _on_AttackRange_area_entered(area):
+	player = area
+"
+
+[sub_resource type="CircleShape2D" id=22]
+radius = 93.086
+
+[sub_resource type="GDScript" id=33]
+script/source = "extends Area2D
+
+var strength = 10
+
+func colliding():
+	var areas = get_overlapping_areas()
+	return areas.size() > 0
+
+func push_vector():
+	var areas = get_overlapping_areas()
+	var push_vector = Vector2.ZERO
+	if colliding():
+		var area = areas[0]
+		push_vector = area.global_position.direction_to(global_position)
+		push_vector = push_vector.normalized() * strength
+	strength = 10
+	return push_vector
+"
+
+[sub_resource type="CircleShape2D" id=23]
+radius = 6.08276
+
+[sub_resource type="CircleShape2D" id=34]
+radius = 3.0
+
+[sub_resource type="CircleShape2D" id=26]
+radius = 4.0
+
+[sub_resource type="Animation" id=28]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:material:shader_param/active")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( -0.1 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+
+[sub_resource type="Animation" id=29]
+resource_name = "play"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:material:shader_param/active")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+
+[node name="Rat" type="KinematicBody2D"]
+collision_layer = 4
+collision_mask = 513
+script = SubResource( 30 )
+wander_distance = 100
+
+[node name="Sprite" type="Sprite" parent="."]
+material = SubResource( 27 )
+position = Vector2( -1, 0 )
+texture = SubResource( 31 )
+hframes = 8
+frame = 4
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../Sprite")
+anims/Down = SubResource( 1 )
+anims/DownLeft = SubResource( 2 )
+anims/DownRight = SubResource( 3 )
+anims/Left = SubResource( 4 )
+anims/RESET = SubResource( 5 )
+anims/Right = SubResource( 6 )
+anims/Up = SubResource( 7 )
+anims/UpLeft = SubResource( 8 )
+anims/UpRight = SubResource( 9 )
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = SubResource( 19 )
+anim_player = NodePath("../AnimationPlayer")
+active = true
+parameters/playback = SubResource( 20 )
+parameters/Direction/blend_position = Vector2( 0, 0 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource( 21 )
+
+[node name="StateTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="SpriteTimer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+autostart = true
+
+[node name="Sight" type="Area2D" parent="."]
+modulate = Color( 1, 1, 1, 0.0901961 )
+collision_layer = 0
+collision_mask = 2
+script = SubResource( 32 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sight"]
+visible = false
+show_behind_parent = true
+position = Vector2( 1, 0 )
+shape = SubResource( 22 )
+
+[node name="SoftCollision" type="Area2D" parent="."]
+position = Vector2( 0, 24 )
+collision_layer = 256
+collision_mask = 256
+script = SubResource( 33 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SoftCollision"]
+visible = false
+shape = SubResource( 23 )
+
+[node name="Hitbox" parent="." instance=ExtResource( 5 )]
+collision_layer = 8
+collision_mask = 64
+shape = SubResource( 34 )
+
+[node name="Hurtbox" parent="." instance=ExtResource( 6 )]
+
+[node name="CollisionShape2D" parent="Hurtbox" index="0"]
+shape = SubResource( 26 )
+
+[node name="Blink" type="AnimationPlayer" parent="."]
+anims/RESET = SubResource( 28 )
+anims/play = SubResource( 29 )
+
+[node name="DeathSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 8 )
+
+[connection signal="timeout" from="StateTimer" to="." method="_on_StateTimer_timeout"]
+[connection signal="timeout" from="SpriteTimer" to="." method="_on_SpriteTimer_timeout"]
+[connection signal="area_entered" from="Sight" to="." method="_on_Sight_area_entered"]
+[connection signal="area_entered" from="Sight" to="Sight" method="_on_Sight_area_entered"]
+[connection signal="area_exited" from="Sight" to="." method="_on_Sight_area_exited"]
+[connection signal="area_entered" from="Hitbox" to="." method="_on_Hitbox_area_entered"]
+[connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_area_entered"]
+[connection signal="finished" from="DeathSound" to="." method="_on_DeathSound_finished"]
+
+[editable path="Hurtbox"]

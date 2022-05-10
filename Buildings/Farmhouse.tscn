@@ -1,0 +1,159 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://Environment Effects/black.png" type="Texture" id=1]
+[ext_resource path="res://Buildings/interior-tiles.png" type="Texture" id=2]
+[ext_resource path="res://Player/Player.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Player/Camera.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Buildings/Farmhouse.gd" type="Script" id=5]
+[ext_resource path="res://Buildings/playerBed.png" type="Texture" id=6]
+[ext_resource path="res://Objects/photograph.png" type="Texture" id=7]
+[ext_resource path="res://NPC/Farmer.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Objects/WoodPlanks.png" type="Texture" id=9]
+
+[sub_resource type="TileSet" id=1]
+0/name = "interior-tiles.png 0"
+0/texture = ExtResource( 2 )
+0/tex_offset = Vector2( 0, 0 )
+0/modulate = Color( 1, 1, 1, 1 )
+0/region = Rect2( 0, 0, 128, 192 )
+0/tile_mode = 2
+0/autotile/icon_coordinate = Vector2( 1, 0 )
+0/autotile/tile_size = Vector2( 32, 32 )
+0/autotile/spacing = 0
+0/autotile/occluder_map = [  ]
+0/autotile/navpoly_map = [  ]
+0/autotile/priority_map = [  ]
+0/autotile/z_index_map = [  ]
+0/occluder_offset = Vector2( 0, 0 )
+0/navigation_offset = Vector2( 0, 0 )
+0/shape_offset = Vector2( 0, 0 )
+0/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+0/shape_one_way = false
+0/shape_one_way_margin = 0.0
+0/shapes = [  ]
+0/z_index = 0
+
+[sub_resource type="TileSet" id=4]
+0/name = "WoodPlanks.png 0"
+0/texture = ExtResource( 9 )
+0/tex_offset = Vector2( 0, 0 )
+0/modulate = Color( 1, 1, 1, 1 )
+0/region = Rect2( 0, 0, 176, 80 )
+0/tile_mode = 1
+0/autotile/bitmask_mode = 1
+0/autotile/bitmask_flags = [ Vector2( 0, 0 ), 432, Vector2( 0, 1 ), 438, Vector2( 0, 2 ), 54, Vector2( 0, 3 ), 48, Vector2( 1, 0 ), 504, Vector2( 1, 1 ), 511, Vector2( 1, 2 ), 63, Vector2( 1, 3 ), 56, Vector2( 2, 0 ), 216, Vector2( 2, 1 ), 219, Vector2( 2, 2 ), 27, Vector2( 2, 3 ), 24, Vector2( 3, 0 ), 144, Vector2( 3, 1 ), 146, Vector2( 3, 2 ), 18, Vector2( 3, 3 ), 16, Vector2( 4, 0 ), 176, Vector2( 4, 1 ), 182, Vector2( 4, 2 ), 434, Vector2( 4, 3 ), 50, Vector2( 4, 4 ), 178, Vector2( 5, 0 ), 248, Vector2( 5, 1 ), 255, Vector2( 5, 2 ), 507, Vector2( 5, 3 ), 59, Vector2( 5, 4 ), 251, Vector2( 6, 0 ), 440, Vector2( 6, 1 ), 447, Vector2( 6, 2 ), 510, Vector2( 6, 3 ), 62, Vector2( 6, 4 ), 446, Vector2( 7, 0 ), 152, Vector2( 7, 1 ), 155, Vector2( 7, 2 ), 218, Vector2( 7, 3 ), 26, Vector2( 7, 4 ), 154, Vector2( 8, 0 ), 184, Vector2( 8, 1 ), 191, Vector2( 8, 2 ), 506, Vector2( 8, 3 ), 58, Vector2( 8, 4 ), 186, Vector2( 9, 0 ), 443, Vector2( 9, 1 ), 254, Vector2( 9, 2 ), 442, Vector2( 9, 3 ), 190, Vector2( 10, 2 ), 250, Vector2( 10, 3 ), 187 ]
+0/autotile/icon_coordinate = Vector2( 3, 3 )
+0/autotile/tile_size = Vector2( 16, 16 )
+0/autotile/spacing = 0
+0/autotile/occluder_map = [  ]
+0/autotile/navpoly_map = [  ]
+0/autotile/priority_map = [  ]
+0/autotile/z_index_map = [  ]
+0/occluder_offset = Vector2( 0, 0 )
+0/navigation_offset = Vector2( 0, 0 )
+0/shape_offset = Vector2( 0, 0 )
+0/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+0/shape_one_way = false
+0/shape_one_way_margin = 0.0
+0/shapes = [  ]
+0/z_index = 0
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 10, 12 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 12, 2.5 )
+
+[node name="Farmhouse" type="Node2D"]
+position = Vector2( -48, -152 )
+script = ExtResource( 5 )
+
+[node name="Backdrop" type="Sprite" parent="."]
+position = Vector2( 43, 23 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( -815.584, -1050.6, 1702.12, 1253.47 )
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = SubResource( 1 )
+cell_size = Vector2( 32, 32 )
+format = 1
+tile_data = PoolIntArray( 0, 0, 0, 1, 0, 1, 2, 0, 2, 3, 0, 0, 4, 0, 1, 5, 0, 1, 6, 0, 1, 7, 0, 1, 8, 0, 1, 9, 0, 2, 65536, 0, 65536, 65537, 0, 65537, 65538, 0, 327683, 65539, 0, 262147, 65540, 0, 65537, 65541, 0, 65537, 65542, 0, 65537, 65543, 0, 65537, 65544, 0, 65537, 65545, 0, 65538, 131072, 0, 0, 131073, 0, 196611, 131074, 0, 1, 131075, 0, 1, 131076, 0, 196611, 131077, 0, 1, 131078, 0, 2, 131079, 0, 131073, 131080, 0, 131073, 131081, 0, 131074, 196608, 0, 65536, 196609, 0, 327680, 196610, 0, 65537, 196611, 0, 65537, 196612, 0, 327680, 196613, 0, 65537, 196614, 0, 65538, 196615, 0, 1, 196616, 0, 1, 196617, 0, 1, 262145, 0, 196611 )
+
+[node name="Wood" type="TileMap" parent="."]
+tile_set = SubResource( 4 )
+cell_size = Vector2( 16, 16 )
+cell_custom_transform = Transform2D( 16, 0, 0, 16, 0, 0 )
+format = 1
+tile_data = PoolIntArray( 131072, 0, 65536, 131073, 0, 65537, 131074, 0, 65537, 131075, 0, 65537, 131076, 0, 65537, 131077, 0, 65538, 131078, 0, 65536, 131079, 0, 65537, 131080, 0, 65537, 131081, 0, 65537, 131082, 0, 65537, 131083, 0, 65537, 131084, 0, 65537, 131085, 0, 65537, 131086, 0, 65537, 131087, 0, 65537, 131088, 0, 65537, 131089, 0, 65537, 131090, 0, 65537, 131091, 0, 65538, 196608, 0, 65536, 196609, 0, 65537, 196610, 0, 65537, 196611, 0, 65537, 196612, 0, 65537, 196613, 0, 65538, 196614, 0, 65536, 196615, 0, 65537, 196616, 0, 65537, 196617, 0, 65537, 196618, 0, 65537, 196619, 0, 65537, 196620, 0, 65537, 196621, 0, 65537, 196622, 0, 65537, 196623, 0, 65537, 196624, 0, 65537, 196625, 0, 65537, 196626, 0, 65537, 196627, 0, 65538, 262144, 0, 65537, 262145, 0, 65537, 262146, 0, 65537, 262147, 0, 65537, 262150, 0, 196608, 262151, 0, 196610, 262152, 0, 65537, 262153, 0, 65537, 262154, 0, 65537, 262158, 0, 65537, 262159, 0, 65537, 262160, 0, 65537, 262161, 0, 65537, 262162, 0, 65537, 262163, 0, 65538, 327682, 0, 131073, 327683, 0, 131073, 327688, 0, 131073, 327689, 0, 131073, 327690, 0, 65537, 327691, 0, 65537, 327692, 0, 65537, 327693, 0, 65537, 327694, 0, 65537, 327695, 0, 65537, 327696, 0, 65537, 327697, 0, 65537, 327698, 0, 65537, 327699, 0, 65538, 393230, 0, 131072, 393231, 0, 131073, 393232, 0, 131073, 393233, 0, 131073, 393234, 0, 131073, 393235, 0, 131074 )
+
+[node name="Shadow" type="Node2D" parent="."]
+
+[node name="Sprite" type="Sprite" parent="Shadow"]
+modulate = Color( 1, 1, 1, 0.313726 )
+position = Vector2( 14.7991, 45.2353 )
+scale = Vector2( 0.680057, 0.470588 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( -5.05452, 14.8943, 30.5263, 51.5789 )
+
+[node name="Sprite2" type="Sprite" parent="Shadow"]
+modulate = Color( 1, 1, 1, 0.313726 )
+position = Vector2( 49.1913, 16.7651 )
+scale = Vector2( 0.264256, 0.124732 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( -5.05452, 14.8943, 30.5263, 51.5789 )
+
+[node name="Photograph" type="Sprite" parent="."]
+position = Vector2( 48, 15 )
+texture = ExtResource( 7 )
+
+[node name="YSort" type="YSort" parent="."]
+
+[node name="Player" parent="YSort" instance=ExtResource( 3 )]
+position = Vector2( 48, 152 )
+
+[node name="Camera2D" parent="YSort/Player" instance=ExtResource( 4 )]
+zoom = Vector2( 0.75, 0.75 )
+
+[node name="PlayerBed" type="Sprite" parent="YSort"]
+position = Vector2( 14, 41 )
+texture = ExtResource( 6 )
+
+[node name="Farmer" parent="YSort" instance=ExtResource( 8 )]
+position = Vector2( 71, 51.75 )
+
+[node name="TileMap3" type="TileMap" parent="YSort"]
+position = Vector2( 0, 96 )
+tile_set = SubResource( 1 )
+cell_size = Vector2( 32, 32 )
+format = 1
+tile_data = PoolIntArray( -65536, 0, 0, -65535, 0, 327682, -65534, 0, 1, -65533, 0, 1, -65532, 0, 327682, -65531, 0, 1, -65530, 0, 2, 7, 0, 1, 8, 0, 1, 9, 0, 1 )
+
+[node name="TileMap2" type="TileMap" parent="."]
+tile_set = SubResource( 1 )
+cell_size = Vector2( 32, 32 )
+format = 1
+tile_data = PoolIntArray( 262144, 0, 1, 262145, 0, 327682, 262146, 0, 1, 262147, 0, 1, 262148, 0, 1, 262149, 0, 1, 262150, 0, 1 )
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PoolVector2Array( 60, 160, 60, 155, 220, 155, 220, 96, 156, 96, 156, 91, 224, 91, 224, 96, 316, 96, 316, 32, 100, 32, 100, 92, 132, 92, 132, 96, 92, 96, 60, 96, 60, 92, 92, 92, 92, 32, 4, 32, 4, 92, 36, 92, 36, 96, 4, 96, 4, 155, 36, 155, 36, 160, 0, 160, 0, 0, 320, 0, 321, 128, 224, 128, 224, 160 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2( 14, 44 )
+shape = SubResource( 3 )
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2( 48, 162.5 )
+shape = SubResource( 2 )
+
+[node name="Node" type="Node" parent="."]
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]
