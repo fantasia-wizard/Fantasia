@@ -12,7 +12,35 @@ Fixed a bug that caused NPCs to display the incorrect dialogue.
 Added more NPCs
 Added a miniboss
 
-Legal info:<br>
+<h2>An extra special thanks</h2>
+Andrii Gook, who made a joystick plugin for Godot.<br>
+https://godotengine.org/asset-library/asset/591
+
+
+Tomeyro, who made an sfx plugin for Godot.<br>
+https://godotengine.org/asset-library/asset/1195
+
+
+KoBeWi, who made the instance dock plugin for Godot.<br>
+https://godotengine.org/asset-library/asset/1136
+
+
+Shidoengie, who made a lovely color pallette.<br>
+https://lospec.com/palette-list/shido-50x
+
+
+Peter Hull, who made the VT323 font.<br>
+https://fonts.google.com/specimen/VT323
+
+
+(music coming soon)
+cgMusic, an AI to generate music.<br>
+http://codeminion.com/blogs/maciek/2008/05/cgmusic-computers-create-music/
+
+and an online interface:<br>
+https://www.fakemusicgenerator.com/
+
+<h2>Legal info</h2><br>
 Copyright 2022 Nicklas Standfest
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
