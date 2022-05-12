@@ -80,6 +80,12 @@ instance_dock/scenes=[ {
 }, {
 "custom_texture": "res://World/snowy_tree.png",
 "scene": "res://Tundra/SnowyTree.tscn"
+}, {
+"custom_texture": "res://World/rock-7.png",
+"scene": "res://World/Rock-7.tscn"
+}, {
+"custom_texture": "res://World/rock-6.png",
+"scene": "res://World/Rock-6.tscn"
 } ],
 "scroll": 0
 } ]
@@ -101,7 +107,6 @@ config/windows_native_icon="res://icon.ico"
 PlayerStats="*res://Player/PlayerStats.tscn"
 HUD="*res://UI/HUD.tscn"
 Ui="*res://UI/UI.tscn"
-DayNightCycle="*res://World/DayNight Cycle.tscn"
 
 [debug]
 

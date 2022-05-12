@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/9 - Ezra Weeks - Other Things Than Power.mp3-f31906392586effdef1ae4ad6ff259bd.mp3str"
+
+[deps]
+
+source_file="res://Sounds/9 - Ezra Weeks - Other Things Than Power.mp3"
+dest_files=[ "res://.import/9 - Ezra Weeks - Other Things Than Power.mp3-f31906392586effdef1ae4ad6ff259bd.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

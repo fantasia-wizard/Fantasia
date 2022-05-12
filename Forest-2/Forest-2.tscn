@@ -1,4 +1,4 @@
-[gd_scene load_steps=85 format=2]
+[gd_scene load_steps=91 format=2]
 
 [ext_resource path="res://World/GrassBackground.png" type="Texture" id=1]
 [ext_resource path="res://Forest-2/Controller.gd" type="Script" id=2]
@@ -28,6 +28,12 @@
 [ext_resource path="res://World/Rock-5.tscn" type="PackedScene" id=26]
 [ext_resource path="res://Overlap Detection/Door.tscn" type="PackedScene" id=27]
 [ext_resource path="res://Cave-1/cave_entrance.png" type="Texture" id=28]
+[ext_resource path="res://Objects/Campfire.tscn" type="PackedScene" id=29]
+[ext_resource path="res://World/Rock-7.tscn" type="PackedScene" id=30]
+[ext_resource path="res://NPC/Explorer2.tscn" type="PackedScene" id=31]
+[ext_resource path="res://World/Crystal-1.tscn" type="PackedScene" id=32]
+[ext_resource path="res://World/Rock-6.tscn" type="PackedScene" id=33]
+[ext_resource path="res://NPC/Explorer.tscn" type="PackedScene" id=34]
 
 [sub_resource type="ConvexPolygonShape2D" id=2]
 points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
@@ -688,9 +694,18 @@ script = ExtResource( 2 )
 position = Vector2( 844, 545 )
 texture = ExtResource( 28 )
 
-[node name="People by cave" type="YSort" parent="Controller"]
-
 [node name="YSort" type="YSort" parent="Controller"]
+
+[node name="People by cave" type="YSort" parent="Controller/YSort"]
+
+[node name="Explorer2" parent="Controller/YSort/People by cave" instance=ExtResource( 31 )]
+position = Vector2( 861, 577 )
+
+[node name="Campfire" parent="Controller/YSort/People by cave" instance=ExtResource( 29 )]
+position = Vector2( 859, 593 )
+
+[node name="Farmer" parent="Controller/YSort/People by cave" instance=ExtResource( 34 )]
+position = Vector2( 820, 604 )
 
 [node name="Player" parent="Controller/YSort" instance=ExtResource( 4 )]
 position = Vector2( -110, -1 )
@@ -1342,6 +1357,21 @@ position = Vector2( 15, -81 )
 [node name="Tree213" parent="Controller/YSort/Trees" instance=ExtResource( 8 )]
 position = Vector2( 608, -690 )
 
+[node name="Tree214" parent="Controller/YSort/Trees" instance=ExtResource( 9 )]
+position = Vector2( 649, 645 )
+
+[node name="Tree215" parent="Controller/YSort/Trees" instance=ExtResource( 8 )]
+position = Vector2( 464, 527 )
+
+[node name="Tree216" parent="Controller/YSort/Trees" instance=ExtResource( 8 )]
+position = Vector2( 502, 620 )
+
+[node name="Tree217" parent="Controller/YSort/Trees" instance=ExtResource( 8 )]
+position = Vector2( 355, 533 )
+
+[node name="Tree218" parent="Controller/YSort/Trees" instance=ExtResource( 8 )]
+position = Vector2( 131, 411 )
+
 [node name="Grass" type="YSort" parent="Controller/YSort"]
 
 [node name="Grass" parent="Controller/YSort/Grass" instance=ExtResource( 13 )]
@@ -1795,6 +1825,45 @@ flip_h = true
 [node name="Grass129" parent="Controller/YSort/Grass" instance=ExtResource( 13 )]
 position = Vector2( 323, 238 )
 
+[node name="Grass130" parent="Controller/YSort/Grass" instance=ExtResource( 13 )]
+position = Vector2( 661, 482 )
+
+[node name="Grass131" parent="Controller/YSort/Grass" instance=ExtResource( 13 )]
+position = Vector2( 668, 490 )
+
+[node name="Grass132" parent="Controller/YSort/Grass" instance=ExtResource( 13 )]
+position = Vector2( 659, 493 )
+
+[node name="Grass133" parent="Controller/YSort/Grass" instance=ExtResource( 13 )]
+position = Vector2( 675, 480 )
+
+[node name="Grass134" parent="Controller/YSort/Grass" instance=ExtResource( 13 )]
+position = Vector2( 679, 489 )
+
+[node name="Grass135" parent="Controller/YSort/Grass" instance=ExtResource( 13 )]
+position = Vector2( 764, 434 )
+
+[node name="Grass136" parent="Controller/YSort/Grass" instance=ExtResource( 13 )]
+position = Vector2( 766, 440 )
+
+[node name="Grass137" parent="Controller/YSort/Grass" instance=ExtResource( 13 )]
+position = Vector2( 754, 430 )
+
+[node name="Grass138" parent="Controller/YSort/Grass" instance=ExtResource( 13 )]
+position = Vector2( 92, 216 )
+
+[node name="Grass139" parent="Controller/YSort/Grass" instance=ExtResource( 13 )]
+position = Vector2( 100, 216 )
+
+[node name="Grass140" parent="Controller/YSort/Grass" instance=ExtResource( 13 )]
+position = Vector2( 96, 226 )
+
+[node name="Grass141" parent="Controller/YSort/Grass" instance=ExtResource( 13 )]
+position = Vector2( 79, 392 )
+
+[node name="Grass142" parent="Controller/YSort/Grass" instance=ExtResource( 13 )]
+position = Vector2( 86, 395 )
+
 [node name="Rock" type="YSort" parent="Controller/YSort"]
 
 [node name="Rock-4" parent="Controller/YSort/Rock" instance=ExtResource( 12 )]
@@ -1871,6 +1940,30 @@ position = Vector2( 732, 277 )
 
 [node name="Rock-17" parent="Controller/YSort/Rock" instance=ExtResource( 17 )]
 position = Vector2( 214, 357 )
+
+[node name="Rock-18" parent="Controller/YSort/Rock" instance=ExtResource( 26 )]
+position = Vector2( 387, 612 )
+
+[node name="Rock-19" parent="Controller/YSort/Rock" instance=ExtResource( 12 )]
+position = Vector2( 524, 464 )
+
+[node name="rock-11" parent="Controller/YSort/Rock" instance=ExtResource( 11 )]
+position = Vector2( 413, 490 )
+
+[node name="rock-12" parent="Controller/YSort/Rock" instance=ExtResource( 10 )]
+position = Vector2( 719, 496 )
+
+[node name="Rock-20" parent="Controller/YSort/Rock" instance=ExtResource( 17 )]
+position = Vector2( 750, 458 )
+
+[node name="Rock-21" parent="Controller/YSort/Rock" instance=ExtResource( 32 )]
+position = Vector2( 40, 344 )
+
+[node name="Rock-22" parent="Controller/YSort/Rock" instance=ExtResource( 30 )]
+position = Vector2( 225, 274 )
+
+[node name="Rock-23" parent="Controller/YSort/Rock" instance=ExtResource( 33 )]
+position = Vector2( 284, 236 )
 
 [node name="Enemies" type="YSort" parent="Controller/YSort"]
 

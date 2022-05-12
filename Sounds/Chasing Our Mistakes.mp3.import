@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Chasing Our Mistakes.mp3-cc541f03e67711225b79a87cb579949c.mp3str"
+
+[deps]
+
+source_file="res://Sounds/Chasing Our Mistakes.mp3"
+dest_files=[ "res://.import/Chasing Our Mistakes.mp3-cc541f03e67711225b79a87cb579949c.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

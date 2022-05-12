@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://UI/UItheme.tres" type="Theme" id=1]
 [ext_resource path="res://UI/exit_without_circle.png" type="Texture" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://UI/Fonts/VT323-Regular.ttf" type="DynamicFontData" id=5]
 [ext_resource path="res://NPC/Farmer2.gd" type="Script" id=6]
 [ext_resource path="res://NPC/farmer2.png" type="Texture" id=7]
+[ext_resource path="res://UI/Exit.gd" type="Script" id=8]
 
 [sub_resource type="CapsuleShape2D" id=6]
 radius = 4.0
@@ -75,7 +76,7 @@ shape = SubResource( 2 )
 [node name="Sprite" type="AnimatedSprite" parent="."]
 position = Vector2( 0, -17 )
 frames = SubResource( 5 )
-frame = 1
+frame = 3
 playing = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
@@ -107,6 +108,7 @@ align = 1
 valign = 1
 
 [node name="Control" type="Control" parent="CanvasLayer/Label"]
+visible = false
 margin_right = 40.0
 margin_bottom = 40.0
 
@@ -117,6 +119,18 @@ pressed = ExtResource( 4 )
 passby_press = true
 action = "ui_accept"
 visibility_mode = 1
+
+[node name="Exit" type="Button" parent="CanvasLayer/Label"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -31.0
+margin_top = 1.0
+margin_right = -1.0
+margin_bottom = 32.0
+action_mode = 0
+icon = ExtResource( 4 )
+flat = true
+script = ExtResource( 8 )
 
 [connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]
 [connection signal="area_exited" from="Area2D" to="." method="_on_Area2D_area_exited"]

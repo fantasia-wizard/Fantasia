@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Silent Injuries.mp3-70584b5962ae1013bee9d1d3dc74b88b.mp3str"
+
+[deps]
+
+source_file="res://Sounds/Silent Injuries.mp3"
+dest_files=[ "res://.import/Silent Injuries.mp3-70584b5962ae1013bee9d1d3dc74b88b.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/5 - Kul Badam - Strange Look.mp3-4424b9672f614fd7485280cb0db70d90.mp3str"
+
+[deps]
+
+source_file="res://Sounds/5 - Kul Badam - Strange Look.mp3"
+dest_files=[ "res://.import/5 - Kul Badam - Strange Look.mp3-4424b9672f614fd7485280cb0db70d90.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

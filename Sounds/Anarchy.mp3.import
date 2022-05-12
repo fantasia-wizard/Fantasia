@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Anarchy.mp3-b161006f461da286abe7a7a13c6b17c8.mp3str"
+
+[deps]
+
+source_file="res://Sounds/Anarchy.mp3"
+dest_files=[ "res://.import/Anarchy.mp3-b161006f461da286abe7a7a13c6b17c8.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

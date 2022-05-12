@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Nuclear Roulette.mp3-d84b6e6e674a62295c547c20245dd041.mp3str"
+
+[deps]
+
+source_file="res://Sounds/Nuclear Roulette.mp3"
+dest_files=[ "res://.import/Nuclear Roulette.mp3-d84b6e6e674a62295c547c20245dd041.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

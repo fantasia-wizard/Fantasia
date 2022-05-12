@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/3 - SS Hornland - Enslaved By It.mp3-b7773208dddaef6d1a995b3c07f0cf1b.mp3str"
+
+[deps]
+
+source_file="res://Sounds/3 - SS Hornland - Enslaved By It.mp3"
+dest_files=[ "res://.import/3 - SS Hornland - Enslaved By It.mp3-b7773208dddaef6d1a995b3c07f0cf1b.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

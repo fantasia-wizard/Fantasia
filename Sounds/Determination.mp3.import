@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Determination.mp3-45660008b0b94ad85a600c7c55760d7e.mp3str"
+
+[deps]
+
+source_file="res://Sounds/Determination.mp3"
+dest_files=[ "res://.import/Determination.mp3-45660008b0b94ad85a600c7c55760d7e.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

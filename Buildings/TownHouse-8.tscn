@@ -59,7 +59,7 @@
 [sub_resource type="RectangleShape2D" id=5]
 extents = Vector2( 17.806, 10 )
 
-[node name="Farmhouse" type="Node2D"]
+[node name="Tavern" type="Node2D"]
 position = Vector2( -48, -152 )
 script = ExtResource( 5 )
 

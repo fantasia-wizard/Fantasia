@@ -32,3 +32,9 @@ func _on_Area2D3_area_entered(area: Area2D) -> void:
 		transition_scene('res://Cave-1/Cave-1.tscn', Vector2.ZERO)
 	else:
 		pass
+
+func _ready() -> void:
+	if PlayerStats.quest_id == 8 or 8 in PlayerStats.quests_completed:
+		pass
+	else:
+		$'YSort/People by cave'.queue_free()

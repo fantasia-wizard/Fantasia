@@ -15,5 +15,5 @@ func text_show():
 
 func _process(delta: float) -> void:
 	if 0 in PlayerStats.quests_completed:
-		text = 'Thanks for harvesting my wheat for me!'
+		text = 'reat job slaying rats! Remember, to check your quest progress, press ESC or Triangle/Y on a controller, then click \'Quests\''
 		has_quest = false

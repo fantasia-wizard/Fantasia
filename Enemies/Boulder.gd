@@ -41,7 +41,7 @@ func _ready():
 	$DeathSound.volume_db = -20
 
 func shoot():
-	var target = $AttackRange.player.global_position
+	var target = player.global_position
 	var new_bullet = bullet.instance()
 	get_parent().add_child(new_bullet)
 	new_bullet.direction = global_position.direction_to(target)
@@ -164,8 +164,8 @@ func _on_DeathSound_finished():
 func _on_AttackRange_area_entered(area):
 	state = ATTACK
 	attack_stage = SHOOT
-
-
+	player = area
+	shoot()
 
 func _on_AttackStateTimer_timeout():
 	attack_stage = SHOOT
