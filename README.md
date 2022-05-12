@@ -21,6 +21,7 @@ Versions prior to alpha 1.6 were used internally for testing.
 <li>Probably did some other stuff but I forgot.</li>
 </ul>
 <h2>An extra special thanks</h2>
+<h4>Because you can't do it alone.</h4>
 Andrii Gook, who made a joystick plugin for Godot.<br>
 https://godotengine.org/asset-library/asset/591<br><br>
 
