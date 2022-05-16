@@ -3,18 +3,35 @@ Open source Top Down Action RPG.
 
 To download compiled versions or play in your browser: https://fantasia-wizard.github.io
 
-<h2>Changelog</h2>
-
-Versions prior to alpha 1.6 were used internally for testing.
-
+<h1>Changelog</h1>
+<h3>Alpha 1</h3>
+<ul>
+<li>Combat
+<li>Mobile entities
+<li>Modular quest system
+<li>savegames
+</ul>
+<h3>Alpha 1.5</h3>
+<ul>
+<li>A new town north of the farmer's house
+<li>Many bug fixes
+<li>Updates to NPC conversation
+<li>More NPCs
+<li>Tutorial level
+<li>More quests
+<li>More responsive combat
+</ul>
+<h3>Alpha 1.5.1</h3>
+<ul>
+<li>Updates to the tutorial
+</ul>
 <h3>Alpha 1.6</h3>
 <ul>
 <li>Fixed a bug that caused NPCs to display the incorrect dialogue.</li>
 <li>Added more NPCs</li>
 <li>Added a miniboss</li>
 </ul>
-  
- <h3>Alpha 1.6.5</h3>
+<h3>Alpha 1.6.5</h3>
 <ul>
 <li>Fixed some issues with the miniboss fight.</li>
 <li>Updated one of the NPCs outside of the cave's texture.</li>
