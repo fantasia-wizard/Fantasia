@@ -6,36 +6,42 @@ To download compiled versions or play in your browser: https://fantasia-wizard.g
 <h1>Changelog</h1>
 <h3>Alpha 1</h3>
 <ul>
-<li>Combat
-<li>Mobile entities
-<li>Modular quest system
-<li>savegames
+<li>Combat.
+<li>Mobile entities.
+<li>Modular quest system.
+<li>savegames.
 </ul>
 <h3>Alpha 1.5</h3>
 <ul>
-<li>A new town north of the farmer's house
-<li>Many bug fixes
-<li>Updates to NPC conversation
-<li>More NPCs
-<li>Tutorial level
-<li>More quests
-<li>More responsive combat
+<li>A new town north of the farmer's house.
+<li>Many bug fixes.
+<li>Updates to NPC conversation.
+<li>More NPCs.
+<li>Tutorial level.
+<li>More quests.
+<li>More responsive combat.
 </ul>
 <h3>Alpha 1.5.1</h3>
 <ul>
-<li>Updates to the tutorial
+<li>Updates to the tutorial.
 </ul>
 <h3>Alpha 1.6</h3>
 <ul>
 <li>Fixed a bug that caused NPCs to display the incorrect dialogue.</li>
-<li>Added more NPCs</li>
-<li>Added a miniboss</li>
+<li>Added more NPCs.</li>
+<li>Added a miniboss.</li>
 </ul>
 <h3>Alpha 1.6.5</h3>
 <ul>
 <li>Fixed some issues with the miniboss fight.</li>
 <li>Updated one of the NPCs outside of the cave's texture.</li>
 <li>Probably did some other stuff but I forgot.</li>
+</ul>
+<h3>Alpha 1.6.6 (In development still, but here's what I've achieved.)</h3>
+<ul>
+<li>Fixed the reset button.
+<li>Multiple notifications can now display simutaneously.
+<li>Notification about the spell book now appear at level 3, when the spellbook does; previously, it would appear at level 5.
 </ul>
 <h2>An extra special thanks</h2>
 <h4>Because you can't do it alone.</h4>
