@@ -1,4 +1,4 @@
-<h1>Fantasia</h1>
+ <h1>Fantasia</h1>
 Open source Top Down Action RPG.
 
 To download compiled versions or play in your browser: https://fantasia-wizard.github.io
