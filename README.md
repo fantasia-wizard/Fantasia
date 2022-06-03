@@ -37,11 +37,12 @@ To download compiled versions or play in your browser: https://fantasia-wizard.g
 <li>Updated one of the NPCs outside of the cave's texture.</li>
 <li>Probably did some other stuff but I forgot.</li>
 </ul>
-<h3>Alpha 1.6.6 (In development still, but here's what I've achieved.)</h3>
+<h3>Alpha 1.6.6</h3>
 <ul>
 <li>Fixed the reset button.
 <li>Multiple notifications can now display simutaneously.
 <li>Notification about the spell book now appear at level 3, when the spellbook does; previously, it would appear at level 5.
+<li>Added interiors to buildings.
 </ul>
 <h2>An extra special thanks</h2>
 <h4>Because you can't do it alone.</h4>
