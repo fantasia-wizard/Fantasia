@@ -41,7 +41,7 @@ To download compiled versions or play in your browser: https://fantasia-wizard.g
 <ul>
 <li>Fixed the reset button.
 <li>Multiple notifications can now display simutaneously.
-<li>Notification about the spell book now appear at level 3, when the spellbook does; previously, it would appear at level 5.
+<li>Notification about the spell book now appears at level 3, when the spellbook does; previously, it would appear at level 5.
 <li>Added interiors to buildings.
 </ul>
 <h2>An extra special thanks</h2>
